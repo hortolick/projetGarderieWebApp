@@ -1,4 +1,4 @@
-﻿@using projetGarderieWebApp.DTOs
+﻿@using projetGarderieWebApp.Models
 @model GarderieDTO;
 @*Si erreur du côté serveur... affichage du message d'erreur...*@
 @if (ViewBag.MessageErreur != null)
@@ -8,7 +8,7 @@
 }
 else
 {
-    <form asp-controller="Garderie" asp-action="Garderie" method="post">
+    <form asp-controller="Garderie" asp-action="ModifierGarderie" method="post">
         <table>
             <tbody><tr>
                 <td><label asp-for="Nom"></label></td>
