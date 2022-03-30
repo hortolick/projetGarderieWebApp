@@ -1,0 +1,82 @@
+﻿@using projetGarderieWebApp.DTOs
+@model GarderieDTO;
+@*Si erreur du côté serveur... affichage du message d'erreur...*@
+@if (ViewBag.MessageErreur != null)
+{
+    <br>
+    <h2 class="alert-danger">@ViewBag.MessageErreur</h2>
+}
+else
+{
+    @*Affichage de la liste des garderies...*@
+    <br>
+    <h3>Liste des Garderie(s) (ViewBag.listeGarderies.Length Garderie(s)) :</h3>
+    <br>
+    
+    <form asp-area="" asp-controller="Garderie" asp-action="ViderListeGarderie" method="post">
+        <tr>
+            <th>Nom</th>
+            <th>Adresse</th>
+            <th>Ville</th>
+            <th>Province</th>
+            <th>Téléphone</th>
+        </tr>
+        <input id="vidation" onclick="if(confirm('Voulez vous?')){submit();}" type="button" value="Vider liste Garderies">
+    </form>
+    
+    <script>
+        if(@ViewBag.listeGarderies.Length==0){
+            document.getElementById('vidation').style.display = "none";
+        }
+    </script>
+    
+    <form asp-area="" asp-controller="Garderie" asp-action="" method="get">
+    
+    <table>
+        <tbody>
+            <input type="hidden" id="nomGarderie" name="nomGarderie">
+            @foreach (GarderieDTO garderie in ViewBag.listeGarderies)
+                {<tr>
+                    <td>@garderie.Nom</td>
+                    <td>@garderie.Adresse</td>
+                    <td>@garderie.Ville</td>
+                    <td>@garderie.Province</td>
+                    <td>@garderie.Telephone</td>
+                    <td><input onclick="document.getElementById('nomGarderie').value = '@garderie.Nom'; this.form.action='/Garderie/FormModifier'; this.form.method='get'; submit();" type="button" value="Modifier"></td>
+                    <td><input onclick="if(confirm('confirmation silvouple')){document.getElementById('nomGarderie').value = '@garderie.Nom'; this.form.action='/Garderie/SupprimerGarderie'; this.form.method='post'; submit();}" type="button" value="Supprimer"></td>
+                </tr>}
+        </tbody>
+    </table>
+    </form>
+
+    <br />
+    <h3>Ajouter une Garderie</h3>
+    <br />
+
+    <form asp-controller="Garderie" asp-action="AjouterGarderie" method="post">
+        <table>
+            <tbody><tr>
+                <td><label asp-for="Nom">Nom</label></td>
+                <td> <input asp-for="Nom"> </td>
+            </tr>
+            <tr>
+                <td> <label asp-for="Adresse">Adresse</label></td>
+                <td> <input asp-for="Adresse"> </td>
+            </tr>
+            <tr>
+                <td> <label asp-for="Ville">Ville</label></td>
+                <td> <input asp-for="Ville"> </td>
+            </tr>
+            <tr>
+                <td> <label asp-for="Province">Province</label> </td>
+                <td> <input asp-for="Province"> </td>
+            </tr>
+            <tr>
+                <td> <label asp-for="Telephone">Telephone</label> </td>
+                <td> <input asp-for="Telephone"> </td>
+            </tr>
+        </tbody></table>
+        <input type="submit" value="Ajouter">
+    </form>
+}
+
