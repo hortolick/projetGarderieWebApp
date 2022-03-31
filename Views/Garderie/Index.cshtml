@@ -21,9 +21,21 @@ else
             <th>Ville</th>
             <th>Province</th>
             <th>Téléphone</th>
+            <th><input id="vidation" onclick="if(confirm('Voulez vous?')){this.form.action='/Garderie/ViderListeGarderie'; this.form.method='post';submit();}" type="button" value="Vider liste Garderies"></th>
         </tr>
+            <tr><td><input type="hidden" id="nomGarderie" name="nomGarderie"></td></tr>
+            @foreach (GarderieDTO garderie in ViewBag.listeGarderies)
+                {<tr>
+                    <td>@garderie.Nom</td>
+                    <td>@garderie.Adresse</td>
+                    <td>@garderie.Ville</td>
+                    <td>@garderie.Province</td>
+                    <td>@garderie.Telephone</td>
+                    <td><input onclick="document.getElementById('nomGarderie').value = '@garderie.Nom'; this.form.action='/Garderie/FormModifier'; this.form.method='get'; submit();" type="button" value="Modifier"><input onclick="if(confirm('confirmation silvouple')){document.getElementById('nomGarderie').value = '@garderie.Nom'; this.form.action='/Garderie/SupprimerGarderie'; this.form.method='post'; submit();}" type="button" value="Supprimer"></td>
+                    
+                </tr>}
         </table>
-        <input id="vidation" onclick="if(confirm('Voulez vous?')){submit();}" type="button" value="Vider liste Garderies">
+        
     </form>
     
     <script>
@@ -37,17 +49,7 @@ else
     <table>
         <tbody>
 
-            <tr><td><input type="hidden" id="nomGarderie" name="nomGarderie"></td></tr>
-            @foreach (GarderieDTO garderie in ViewBag.listeGarderies)
-                {<tr>
-                    <td>@garderie.Nom</td>
-                    <td>@garderie.Adresse</td>
-                    <td>@garderie.Ville</td>
-                    <td>@garderie.Province</td>
-                    <td>@garderie.Telephone</td>
-                    <td><input onclick="document.getElementById('nomGarderie').value = '@garderie.Nom'; this.form.action='/Garderie/FormModifier'; this.form.method='get'; submit();" type="button" value="Modifier"></td>
-                    <td><input onclick="if(confirm('confirmation silvouple')){document.getElementById('nomGarderie').value = '@garderie.Nom'; this.form.action='/Garderie/SupprimerGarderie'; this.form.method='post'; submit();}" type="button" value="Supprimer"></td>
-                </tr>}
+            
         </tbody>
     </table>
     </form>
