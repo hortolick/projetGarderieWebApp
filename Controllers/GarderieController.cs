@@ -30,7 +30,7 @@ namespace projetGarderieWebApp.Controllers
         /// 
         /// </summary>
         [Route("Garderie/AjouterGarderie")]
-        [HttpGet]
+        [HttpPost]
         public async Task<IActionResult> AjouterGarderie([FromForm] GarderieDTO garderie)
         {
             try
