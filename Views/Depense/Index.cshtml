@@ -1,0 +1,74 @@
+﻿@using projetGarderieWebApp.Models
+@model DepenseDTO;
+@*Si erreur du côté serveur... affichage du message d'erreur...*@
+@if (ViewBag.MessageErreur != null)
+{
+    <br>
+    <h2 class="alert-danger">@ViewBag.MessageErreur</h2>
+}
+else
+{
+    @*Affichage de la liste des garderies...*@
+    <br>
+    <h3>Liste des Dépense(s) (@ViewBag.listeDepenses.Length Dépense(s)) :</h3>
+    <br>
+    
+    <form asp-area="" asp-controller="Depense" asp-action="ViderListeDepense" method="post">
+        <table>
+        <tr>
+            <th>Date</th>
+            <th>Montant</th>
+            <th>Montant admissible</th>
+            <th><input id="vidation" onclick="if(confirm('Voulez vous?')){this.form.action='/Depense/ViderListeDepense'; this.form.method='post';submit();}" type="button" value="Vider liste Depenses"></th>
+        </tr>
+            <tr><td><input type="hidden" id="nomDepense" name="nomDepense"></td></tr>
+            @foreach (DepenseDTO depense in ViewBag.listeDepenses)
+                {<tr>
+                    <td>@depense.DateTemps</td>
+                    <td>@depense.Montant</td>
+                    <td>@depense.MontantAdmissible</td>
+                    <!--<td><input onclick="document.getElementById('nomDepense').value = '@depense.DateTemps'; this.form.action='/Depense/FormModifier'; this.form.method='get'; submit();" type="button" value="Modifier"><input onclick="if(confirm('confirmation silvouple')){document.getElementById('nomDepense').value = '@garderie.Nom'; this.form.action='/Depense/SupprimerDepense'; this.form.method='post'; submit();}" type="button" value="Supprimer"></td>-->
+                </tr>}
+        </table>
+        
+    </form>
+    
+    <script>
+        if(@ViewBag.listeDepenses.Length==0){
+            document.getElementById('vidation').style.display = "none";
+        }
+    </script>
+    
+    <form asp-area="" asp-controller="Depense" asp-action="" method="get">
+    
+    <table>
+        <tbody>
+
+            
+        </tbody>
+    </table>
+    </form>
+
+    <br />
+    <h3>Ajouter une dépense</h3>
+    <br />
+
+    <form asp-controller="Depense" asp-action="AjouterDepense" method="post">
+        <table>
+            <tbody>
+            <tr>
+                <td> <label asp-for="Montant"></label></td>
+                <td> <input asp-for="Montant"> </td>
+            </tr>
+            <tr>
+                <td> <label asp-for="MontantAdmissible"></label></td>
+                <td> <input asp-for="MontantAdmissible"> </td>
+            </tr>
+            <tr><td><input type="submit" value="Ajouter"></td></tr>   
+        </tbody>
+         
+    </table>
+        
+    </form>
+}
+
