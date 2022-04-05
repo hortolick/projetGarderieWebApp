@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using projetGarderieWebApp.DTOs;
+using projetGarderieWebApp.Models;
 using projetGarderieWebApp.Tools;
 using System;
 using System.Collections.Generic;

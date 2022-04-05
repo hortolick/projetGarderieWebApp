@@ -1,6 +1,4 @@
-﻿using projetGarderieWebApp.Models;
-
-namespace projetGarderieWebApp.DTOs
+﻿namespace projetGarderieWebApp.Models
 {
     public class GarderieDTO
 	{
@@ -56,19 +54,6 @@ namespace projetGarderieWebApp.DTOs
 		/// Parameterless constructor
 		/// </summary>
 		public GarderieDTO() { }
-
-		/// <summary>
-		/// Constructeur avec modele
-		/// </summary>
-		/// <param name="garderie">Modele de la garderie</param>
-		public GarderieDTO(Garderie garderie)
-		{
-			Nom = garderie.Nom;
-			Adresse = garderie.Adresse;
-			Ville = garderie.Ville;
-			Province = garderie.Province;
-			Telephone = garderie.Telephone;
-		}
 
 		#endregion Constructeurs
 

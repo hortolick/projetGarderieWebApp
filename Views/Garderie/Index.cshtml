@@ -1,4 +1,4 @@
-﻿@using projetGarderieWebApp.DTOs
+﻿@using projetGarderieWebApp.Models
 @model GarderieDTO;
 @*Si erreur du côté serveur... affichage du message d'erreur...*@
 @if (ViewBag.MessageErreur != null)
@@ -10,18 +10,32 @@ else
 {
     @*Affichage de la liste des garderies...*@
     <br>
-    <h3>Liste des Garderie(s) (ViewBag.listeGarderies.Length Garderie(s)) :</h3>
+    <h3>Liste des Garderie(s) (@ViewBag.listeGarderies.Length Garderie(s)) :</h3>
     <br>
     
     <form asp-area="" asp-controller="Garderie" asp-action="ViderListeGarderie" method="post">
+        <table>
         <tr>
             <th>Nom</th>
             <th>Adresse</th>
             <th>Ville</th>
             <th>Province</th>
             <th>Téléphone</th>
+            <th><input id="vidation" onclick="if(confirm('Voulez vous?')){this.form.action='/Garderie/ViderListeGarderie'; this.form.method='post';submit();}" type="button" value="Vider liste Garderies"></th>
         </tr>
-        <input id="vidation" onclick="if(confirm('Voulez vous?')){submit();}" type="button" value="Vider liste Garderies">
+            <tr><td><input type="hidden" id="nomGarderie" name="nomGarderie"></td></tr>
+            @foreach (GarderieDTO garderie in ViewBag.listeGarderies)
+                {<tr>
+                    <td>@garderie.Nom</td>
+                    <td>@garderie.Adresse</td>
+                    <td>@garderie.Ville</td>
+                    <td>@garderie.Province</td>
+                    <td>@garderie.Telephone</td>
+                    <td><input onclick="document.getElementById('nomGarderie').value = '@garderie.Nom'; this.form.action='/Garderie/FormModifier'; this.form.method='get'; submit();" type="button" value="Modifier"><input onclick="if(confirm('confirmation silvouple')){document.getElementById('nomGarderie').value = '@garderie.Nom'; this.form.action='/Garderie/SupprimerGarderie'; this.form.method='post'; submit();}" type="button" value="Supprimer"></td>
+                    
+                </tr>}
+        </table>
+        
     </form>
     
     <script>
@@ -34,17 +48,8 @@ else
     
     <table>
         <tbody>
-            <input type="hidden" id="nomGarderie" name="nomGarderie">
-            @foreach (GarderieDTO garderie in ViewBag.listeGarderies)
-                {<tr>
-                    <td>@garderie.Nom</td>
-                    <td>@garderie.Adresse</td>
-                    <td>@garderie.Ville</td>
-                    <td>@garderie.Province</td>
-                    <td>@garderie.Telephone</td>
-                    <td><input onclick="document.getElementById('nomGarderie').value = '@garderie.Nom'; this.form.action='/Garderie/FormModifier'; this.form.method='get'; submit();" type="button" value="Modifier"></td>
-                    <td><input onclick="if(confirm('confirmation silvouple')){document.getElementById('nomGarderie').value = '@garderie.Nom'; this.form.action='/Garderie/SupprimerGarderie'; this.form.method='post'; submit();}" type="button" value="Supprimer"></td>
-                </tr>}
+
+            
         </tbody>
     </table>
     </form>
@@ -56,27 +61,29 @@ else
     <form asp-controller="Garderie" asp-action="AjouterGarderie" method="post">
         <table>
             <tbody><tr>
-                <td><label asp-for="Nom">Nom</label></td>
+                <td><label asp-for="Nom"></label></td>
                 <td> <input asp-for="Nom"> </td>
             </tr>
             <tr>
-                <td> <label asp-for="Adresse">Adresse</label></td>
+                <td> <label asp-for="Adresse"></label></td>
                 <td> <input asp-for="Adresse"> </td>
             </tr>
             <tr>
-                <td> <label asp-for="Ville">Ville</label></td>
+                <td> <label asp-for="Ville"></label></td>
                 <td> <input asp-for="Ville"> </td>
             </tr>
             <tr>
-                <td> <label asp-for="Province">Province</label> </td>
+                <td> <label asp-for="Province"></label> </td>
                 <td> <input asp-for="Province"> </td>
             </tr>
             <tr>
-                <td> <label asp-for="Telephone">Telephone</label> </td>
+                <td> <label asp-for="Telephone"></label> </td>
                 <td> <input asp-for="Telephone"> </td>
             </tr>
-        </tbody></table>
-        <input type="submit" value="Ajouter">
+            <tr><td><input type="submit" value="Ajouter"></td></tr>   
+        </tbody>
+         
+    </table>
+        
     </form>
 }
-
