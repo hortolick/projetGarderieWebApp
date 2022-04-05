@@ -12,7 +12,7 @@ namespace projetGarderieWebApp.Controllers
     public class GarderieController : Controller
     {
         /// <summary>
-        /// 
+        /// page principale
         /// </summary>
         /// <returns></returns>
         [Route("")]
