@@ -11,16 +11,27 @@ namespace projetGarderieWebApp.Controllers
 {
     public class DepenseController : Controller
     {
-        [Route("")]
         [Route("Depense")]
         [Route("Depense/Index")]
         [HttpGet]
-        public async Task<IActionResult> Index(string nomGarderie)
+        public async Task<IActionResult> Index([FromQuery]string nomGarderie)
         {
-            JsonValue listeGarderiesJson = await WebAPI.Instance.ExecuteGetAsync("http://" + Program.HOST + ":" + Program.PORT + "/Garderie/ObtenirListeGarderie");
-            ViewBag.listeGarderies = JsonConvert.DeserializeObject<List<GarderieDTO>>(listeGarderiesJson.ToString()).ToArray();
-            JsonValue listeDepensesJson = await WebAPI.Instance.ExecuteGetAsync("http://" + Program.HOST + ":" + Program.PORT + "/Depense/ObtenirListeDepense");
-            ViewBag.listeDepenses = JsonConvert.DeserializeObject<List<DepenseDTO>>(listeDepensesJson.ToString()).ToArray();
+            try
+            {
+                JsonValue listeGarderiesJson = await WebAPI.Instance.ExecuteGetAsync("http://" + Program.HOST + ":" + Program.PORT + "/Garderie/ObtenirListeGarderie");
+                ViewBag.listeGarderies = JsonConvert.DeserializeObject<List<GarderieDTO>>(listeGarderiesJson.ToString()).ToArray();
+                if(nomGarderie == null)
+                {
+                    nomGarderie = ViewBag.listeGarderies[0].Nom;
+                }
+                JsonValue listeDepensesJson = await WebAPI.Instance.ExecuteGetAsync("http://" + Program.HOST + ":" + Program.PORT + "/Depense/ObtenirListeDepense?nomGarderie=" + nomGarderie);
+                ViewBag.listeDepenses = JsonConvert.DeserializeObject<List<DepenseDTO>>(listeDepensesJson.ToString()).ToArray();
+                ViewBag.nomGarderie = nomGarderie;
+            }
+            catch (Exception e)
+            {
+                ViewBag.MessageErreur = e.Message;
+            }
             return View();
         }
 
