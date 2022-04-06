@@ -8,6 +8,22 @@
 }
 else
 {
+    <h1>Sélectionner une garderie : </h1>
+    <form method="get" action="">
+        <select name="nomCegep" onchange="this.form.submit()" id="cegep">
+            @foreach (GarderieDTO garderie in ViewBag.listeGarderies)
+            {
+                @if(@garderie.Nom.Equals(ViewBag.nomGarderie))
+                {
+                    <option value=@garderie.Nom action="departement" selected>@garderie.Nom</option>
+                }
+                else
+                {
+                    <option value=@garderie.Nom action="departement">@garderie.Nom</option>
+                }
+            }
+        </select>
+    </form>
     @*Affichage de la liste des garderies...*@
     <br>
     <h3>Liste des Dépense(s) (@ViewBag.listeDepenses.Length Dépense(s)) :</h3>
