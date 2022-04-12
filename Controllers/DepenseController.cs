@@ -30,11 +30,11 @@ namespace projetGarderieWebApp.Controllers
                         nomGarderie = ViewBag.listeGarderies[0].Nom;
                     }
                 }
-                //JsonValue listeCategoriesJson = await WebAPI.Instance.ExecuteGetAsync("http://" + Program.HOST + ":" + Program.PORT + "/CategorieDepense/ObtenirListeCategorieDepense");
-                //ViewBag.listeCategories = JsonConvert.DeserializeObject<List<CategorieDepenseDTO>>(listeCategoriesJson.ToString()).ToArray();
+                JsonValue listeCategoriesJson = await WebAPI.Instance.ExecuteGetAsync("http://" + Program.HOST + ":" + Program.PORT + "/CategorieDepense/ObtenirListeCategorieDepense");
+                ViewBag.listeCategories = JsonConvert.DeserializeObject<List<CategorieDepenseDTO>>(listeCategoriesJson.ToString()).ToArray();
 
-                //JsonValue listeCommercesJson = await WebAPI.Instance.ExecuteGetAsync("http://" + Program.HOST + ":" + Program.PORT + "/Commerce/ObtenirListeCommerce");
-                //ViewBag.listeCommerces = JsonConvert.DeserializeObject<List<CategorieDepenseDTO>>(listeCommercesJson.ToString()).ToArray();
+                JsonValue listeCommercesJson = await WebAPI.Instance.ExecuteGetAsync("http://" + Program.HOST + ":" + Program.PORT + "/Commerce/ObtenirListeCommerce");
+                ViewBag.listeCommerces = JsonConvert.DeserializeObject<List<CommerceDTO>>(listeCommercesJson.ToString()).ToArray();
 
                 JsonValue listeDepensesJson = await WebAPI.Instance.ExecuteGetAsync("http://" + Program.HOST + ":" + Program.PORT + "/Depense/ObtenirListeDepense?nomGarderie=" + nomGarderie);
                 ViewBag.listeDepenses = JsonConvert.DeserializeObject<List<DepenseDTO>>(listeDepensesJson.ToString()).ToArray();

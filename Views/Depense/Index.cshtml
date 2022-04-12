@@ -1,20 +1,5 @@
 ﻿@using projetGarderieWebApp.Models
 @model DepenseDTO;
-<script>
-    function formatMoney(number, decPlaces, decSep, thouSep) {
-    decPlaces = isNaN(decPlaces = Math.abs(decPlaces)) ? 2 : decPlaces,
-    decSep = typeof decSep === "undefined" ? "." : decSep;
-    thouSep = typeof thouSep === "undefined" ? "," : thouSep;
-    var sign = number < 0 ? "-" : "";
-    var i = String(parseInt(number = Math.abs(Number(number) || 0).toFixed(decPlaces)));
-    var j = (j = i.length) > 3 ? j % 3 : 0;
-
-    return sign +
-        (j ? i.substr(0, j) + thouSep : "") +
-        i.substr(j).replace(/(\decSep{3})(?=\decSep)/g, "$1" + thouSep) +
-        (decPlaces ? decSep + Math.abs(number - i).toFixed(decPlaces).slice(2) : "");
-}
-</script>
 @*Si erreur du côté serveur... affichage du message d'erreur...*@
 @if (ViewBag.MessageErreur != null)
 {
@@ -30,16 +15,16 @@ else
             {
                 @if(@garderie.Nom.Equals(ViewBag.nomGarderie))
                 {
-                    <option value=@garderie.Nom action="departement" selected>@garderie.Nom</option>
+                    <option value=@garderie.Nom action="garderie" selected>@garderie.Nom</option>
                 }
                 else
                 {
-                    <option value=@garderie.Nom action="departement">@garderie.Nom</option>
+                    <option value=@garderie.Nom action="garderie">@garderie.Nom</option>
                 }
             }
         </select>
     </form>
-    @*Affichage de la liste des garderies...*@
+    @*Affichage de la liste des depenses...*@
     <br>
     <h3>Liste des Dépense(s) (@ViewBag.listeDepenses.Length Dépense(s)) :</h3>
     <br>
@@ -85,15 +70,27 @@ else
     <br />
 
     <form asp-controller="Depense" asp-action="AjouterDepense" method="post">
+        <select name="CategorieDepense" id="categorie">
+            @foreach (CategorieDepenseDTO categorie in ViewBag.listeCategorieDepense)
+            {
+                {
+                    <option value=@categorie.Description action="departement" selected>@categorie.Description</option>
+                }
+            }
+        </select>
+        <select name="Commerce" id="commerce">
+            @foreach (CommerceDTO commerce in ViewBag.listeCommerce)
+            {
+                {
+                    <option value=@commerce.Description action="departement" selected>@commerce.Description</option>
+                }
+            }
+        </select>
         <table>
             <tbody>
             <tr>
                 <td> <label asp-for="Montant"></label></td>
                 <td> <input asp-for="Montant"> </td>
-            </tr>
-            <tr>
-                <td> <label asp-for="MontantAdmissible"></label></td>
-                <td> <input asp-for="MontantAdmissible"> </td>
             </tr>
             <tr><td><input type="submit" value="Ajouter"></td></tr>   
         </tbody>
