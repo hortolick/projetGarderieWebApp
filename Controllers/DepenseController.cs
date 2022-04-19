@@ -31,7 +31,7 @@ namespace projetGarderieWebApp.Controllers
                     }
                 }
                 JsonValue listeCategoriesJson = await WebAPI.Instance.ExecuteGetAsync("http://" + Program.HOST + ":" + Program.PORT + "/CategorieDepense/ObtenirListeCategorieDepense");
-                ViewBag.listeCategories = JsonConvert.DeserializeObject<List<CategorieDepenseDTO>>(listeCategoriesJson.ToString()).ToArray();
+                ViewBag.listeCategorieDepenses = JsonConvert.DeserializeObject<List<CategorieDepenseDTO>>(listeCategoriesJson.ToString()).ToArray();
 
                 JsonValue listeCommercesJson = await WebAPI.Instance.ExecuteGetAsync("http://" + Program.HOST + ":" + Program.PORT + "/Commerce/ObtenirListeCommerce");
                 ViewBag.listeCommerces = JsonConvert.DeserializeObject<List<CommerceDTO>>(listeCommercesJson.ToString()).ToArray();

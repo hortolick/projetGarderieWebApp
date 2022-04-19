@@ -71,7 +71,7 @@ else
 
     <form asp-controller="Depense" asp-action="AjouterDepense" method="post">
         <select name="CategorieDepense" id="categorie">
-            @foreach (CategorieDepenseDTO categorie in ViewBag.listeCategorieDepense)
+            @foreach (CategorieDepenseDTO categorie in ViewBag.listeCategorieDepenses)
             {
                 {
                     <option value=@categorie.Description action="departement" selected>@categorie.Description</option>
@@ -79,7 +79,7 @@ else
             }
         </select>
         <select name="Commerce" id="commerce">
-            @foreach (CommerceDTO commerce in ViewBag.listeCommerce)
+            @foreach (CommerceDTO commerce in ViewBag.listeCommerces)
             {
                 {
                     <option value=@commerce.Description action="departement" selected>@commerce.Description</option>
