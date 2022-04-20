@@ -12,7 +12,7 @@ namespace projetGarderieWebApp.Controllers
     public class GarderieController : Controller
     {
         /// <summary>
-        /// 
+        /// page principale
         /// </summary>
         /// <returns></returns>
         [Route("")]
@@ -31,11 +31,11 @@ namespace projetGarderieWebApp.Controllers
         /// </summary>
         [Route("Garderie/AjouterGarderie")]
         [HttpPost]
-        public async Task<IActionResult> AjouterGarderie([FromForm] GarderieDTO garderie)
+        public async Task<IActionResult> AjouterGarderie([FromForm] GarderieDTO garderieDTO)
         {
             try
             {
-                await WebAPI.Instance.PostAsync("http://" + Program.HOST + ":" + Program.PORT + "/Garderie/AjouterGarderie", garderie);
+                await WebAPI.Instance.PostAsync("http://" + Program.HOST + ":" + Program.PORT + "/Garderie/AjouterGarderie", garderieDTO);
             }
             catch (Exception e)
             {
@@ -80,11 +80,11 @@ namespace projetGarderieWebApp.Controllers
         /// <returns></returns>
         [Route("Garderie/ModifierGarderie")]
         [HttpPost]
-        public async Task<IActionResult> ModifierGarderie([FromForm] GarderieDTO garderie)
+        public async Task<IActionResult> ModifierGarderie([FromForm] GarderieDTO garderieDTO)
         {
             try
             {
-                await WebAPI.Instance.PostAsync("http://" + Program.HOST + ":" + Program.PORT + "/Garderie/ModifierGarderie", garderie);
+                await WebAPI.Instance.PostAsync("http://" + Program.HOST + ":" + Program.PORT + "/Garderie/ModifierGarderie", garderieDTO);
             }
             catch (Exception e)
             {
