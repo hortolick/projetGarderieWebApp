@@ -11,6 +11,11 @@ namespace projetGarderieWebApp.Controllers
 {
     public class DepenseController : Controller
     {
+        /// <summary>
+        /// Obtenir la liste des depenses
+        /// </summary>
+        /// <param name="nomGarderie">Le nom de la garderie associée avec les dépenses</param>
+        /// <returns></returns>
         [Route("Depense")]
         [Route("Depense/Index")]
         [HttpGet]
@@ -47,13 +52,19 @@ namespace projetGarderieWebApp.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Permet d'ajouter une dépense
+        /// </summary>
+        /// <param name="nomGarderie">le nom de la garderie</param>
+        /// <param name="depenseDTO">Le DTO de la dépense à ajouter</param>
+        /// <returns></returns>
         [Route("Depense/AjouterDepense")]
         [HttpPost]
-        public async Task<IActionResult> AjouterDepense([FromForm] string nomGarderie, [FromForm] string CategorieDepense, [FromForm] string Commerce,[FromForm] DepenseDTO depenseDTO)
+        public async Task<IActionResult> AjouterDepense([FromForm] string nomGarderie, [FromForm] DepenseDTO depenseDTO)
         {
             try
             {
-                await WebAPI.Instance.PostAsync("http://" + Program.HOST + ":" + Program.PORT + "/Depense/AjouterDepense?nomGarderie=" + nomGarderie + "&descriptionCategorie=" + CategorieDepense + "&descriptionCommerce=" + Commerce,  depenseDTO);
+                await WebAPI.Instance.PostAsync("http://" + Program.HOST + ":" + Program.PORT + "/Depense/AjouterDepense?nomGarderie=" + nomGarderie, depenseDTO);
             }
             catch (Exception e)
             {

@@ -1,5 +1,6 @@
 ﻿@using projetGarderieWebApp.Models
 @model DepenseDTO;
+
 @*Si erreur du côté serveur... affichage du message d'erreur...*@
 @if (ViewBag.MessageErreur != null)
 {
@@ -35,7 +36,7 @@ else
             <th>Date</th>
             <th>Montant</th>
             <th>Montant admissible</th>
-            <th><input id="vidation" onclick="if(confirm('Voulez vous?')){this.form.action='/Depense/ViderListeDepense'; this.form.method='post';submit();}" type="button" value="Vider liste Depenses"></th>
+            @*<th><input id="vidation" onclick="if(confirm('Voulez vous?')){this.form.action='/Depense/ViderListeDepense'; this.form.method='post';submit();}" type="button" value="Vider liste Depenses"></th>*@
         </tr>
             <tr><td><input type="hidden" id="nomDepense" name="nomDepense"></td></tr>
             @foreach (DepenseDTO depense in ViewBag.listeDepenses)
@@ -71,7 +72,7 @@ else
 
     <form asp-controller="Depense" asp-action="AjouterDepense" method="post">
         <label>Catégorie de la dépense</label>
-        <select name="CategorieDepense" id="categorie">
+        <select asp-for="CategorieDepense.Description" >
             @foreach (CategorieDepenseDTO categorie in ViewBag.listeCategorieDepenses)
             {
                 {
@@ -81,7 +82,7 @@ else
         </select>
         <br>
         <label>Commerce de la dépense</label>
-        <select name="Commerce" id="commerce">
+        <select asp-for="Commerce.Description">
             @foreach (CommerceDTO commerce in ViewBag.listeCommerces)
             {
                 {
