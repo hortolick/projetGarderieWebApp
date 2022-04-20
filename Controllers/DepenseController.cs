@@ -49,17 +49,17 @@ namespace projetGarderieWebApp.Controllers
 
         [Route("Depense/AjouterDepense")]
         [HttpPost]
-        public async Task<IActionResult> AjouterDepense([FromForm] string nomGarderie ,[FromForm] DepenseDTO depenseDTO)
+        public async Task<IActionResult> AjouterDepense([FromForm] string nomGarderie, [FromForm] string CategorieDepense, [FromForm] string Commerce,[FromForm] DepenseDTO depenseDTO)
         {
             try
             {
-                await WebAPI.Instance.PostAsync("http://" + Program.HOST + ":" + Program.PORT + "/Depense/AjouterDepense?nomGarderie=" + nomGarderie, depenseDTO);
+                await WebAPI.Instance.PostAsync("http://" + Program.HOST + ":" + Program.PORT + "/Depense/AjouterDepense?nomGarderie=" + nomGarderie + "&descriptionCategorie=" + CategorieDepense + "&descriptionCommerce=" + Commerce,  depenseDTO);
             }
             catch (Exception e)
             {
                 ViewBag.MessageErreur = e.Message;
             }
-            return RedirectToAction("Index", "Depense");
+            return RedirectToAction("Index", "Depense", new { nomGarderie = nomGarderie });
         }
     }
 }
