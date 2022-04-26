@@ -21,9 +21,9 @@ else
             <th>Nom</th>
             <th>Adresse</th>
             <th>Ville</th>
-            <th>Province</th>
+            <th class="pr-2">Province</th>
             <th>Téléphone</th>
-            <th><input id="vidation" onclick="if(confirm('Voulez vous?')){this.form.action='/Garderie/ViderListeGarderie'; this.form.method='post';submit();}" type="button" value="Vider liste Garderies"></th>
+            <th><input class="btn btn-danger" id="vidation" onclick="if(confirm('Voulez vous?')){this.form.action='/Garderie/ViderListeGarderie'; this.form.method='post';submit();}" type="button" value="Vider liste Garderies"></th>
         </tr>
             <tr><td><input type="hidden" id="nomGarderie" name="nomGarderie"></td></tr>
             @foreach (GarderieDTO garderie in ViewBag.listeGarderies)
@@ -32,8 +32,9 @@ else
                     <td>@garderie.Adresse</td>
                     <td>@garderie.Ville</td>
                     <td>@garderie.Province</td>
-                    <td>@garderie.Telephone</td>
-                    <td><input onclick="document.getElementById('nomGarderie').value = '@garderie.Nom'; this.form.action='/Garderie/FormModifier'; this.form.method='get'; submit();" type="button" value="Modifier"><input onclick="if(confirm('confirmation silvouple')){document.getElementById('nomGarderie').value = '@garderie.Nom'; this.form.action='/Garderie/SupprimerGarderie'; this.form.method='post'; submit();}" type="button" value="Supprimer"></td>
+                    <td class="pr-2">@garderie.Telephone</td>
+                    <td><input class="btn btn-primary" onclick="document.getElementById('nomGarderie').value = '@garderie.Nom'; this.form.action='/Garderie/FormModifier'; this.form.method='get'; submit();" type="button" value="Modifier">
+                        <input class="btn btn-primary" onclick="if(confirm('confirmation silvouple')){document.getElementById('nomGarderie').value = '@garderie.Nom'; this.form.action='/Garderie/SupprimerGarderie'; this.form.method='post'; submit();}" type="button" value="Supprimer"></td>
                     
                 </tr>}
         </table>

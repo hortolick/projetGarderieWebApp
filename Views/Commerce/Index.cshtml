@@ -1,0 +1,73 @@
+﻿@using projetGarderieWebApp.Models
+@model CommerceDTO;
+@*Si erreur du côté serveur... affichage du message d'erreur...*@
+@if (ViewBag.MessageErreur != null)
+{
+    <br>
+    <h2 class="alert-danger">@ViewBag.MessageErreur</h2>
+}
+else
+{
+
+
+    @*Affichage de la liste des commerces...*@
+    <br>
+    <h3>Liste des Commerce(s) (@ViewBag.listeCommerces.Length Commerce(s)) :</h3>
+    <br>
+    
+    <form asp-area="" asp-controller="Commerce" asp-action="ViderListeCommerce" method="post">
+        <table>
+        <tr>
+            <th>Description</th>
+            <th>Adresse</th>
+            <th>Telephone</th>
+            <th><input class="btn btn-danger" id="vidation" onclick="if(confirm('Voulez vous?')){this.form.action='/Commerce/ViderListeCommerce'; this.form.method='post';submit();}" type="button" value="Vider liste Commerces"></th>
+        </tr>
+            <tr><td><input type="hidden" id="nomCommerce" name="nomCommerce"></td></tr>
+            @foreach (CommerceDTO commerce in ViewBag.listeCommerces)
+                {<tr>
+                    <td>@commerce.Description</td>
+                    <td>@commerce.Adresse</td>
+                    <td class="pr-2">@commerce.Telephone</td>
+                    <td><input class="btn btn-primary" onclick="document.getElementById('nomCommerce').value = '@commerce.Description'; this.form.action='/Commerce/FormModifier'; this.form.method='get'; submit();" type="button" value="Modifier">
+                        <input class="btn btn-primary" onclick="if(confirm('confirmation silvouple')){document.getElementById('nomCommerce').value = '@commerce.Description'; this.form.action='/Commerce/SupprimerCommerce'; this.form.method='post'; submit();}" type="button" value="Supprimer"></td>
+                    
+                </tr>}
+        </table>
+        
+    </form>
+    
+    <script>
+        if(@ViewBag.listeCommerces.Length>=1){
+            document.getElementById('vidation').style.display = "none";
+        }
+    </script>
+    
+
+    <br />
+    <h3>Ajouter un Commerce</h3>
+    <br />
+
+    <form asp-controller="Commerce" asp-action="AjouterCommerce" method="post">
+        <table>
+            <tbody>
+            <tr>
+                <td> <label asp-for="Description"></label></td>
+                <td> <input asp-for="Description"> </td>
+            </tr>
+            <tr>
+                <td> <label asp-for="Adresse"></label></td>
+                <td> <input asp-for="Adresse"> </td>
+            </tr>
+            <tr>
+                <td> <label asp-for="Telephone"></label> </td>
+                <td> <input asp-for="Telephone"> </td>
+            </tr>
+            <tr><td><input type="submit" value="Ajouter"></td></tr>   
+        </tbody>
+         
+    </table>
+        
+    </form>
+}
+

@@ -11,6 +11,11 @@ namespace projetGarderieWebApp.Controllers
 {
     public class DepenseController : Controller
     {
+        /// <summary>
+        /// Obtenir la liste des depenses
+        /// </summary>
+        /// <param name="nomGarderie">Le nom de la garderie associée avec les dépenses</param>
+        /// <returns></returns>
         [Route("Depense")]
         [Route("Depense/Index")]
         [HttpGet]
@@ -47,13 +52,75 @@ namespace projetGarderieWebApp.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Permet d'ajouter une dépense
+        /// </summary>
+        /// <param name="nomGarderie">le nom de la garderie</param>
+        /// <param name="depenseDTO">Le DTO de la dépense à ajouter</param>
+        /// <returns></returns>
         [Route("Depense/AjouterDepense")]
         [HttpPost]
-        public async Task<IActionResult> AjouterDepense([FromForm] string nomGarderie, [FromForm] string CategorieDepense, [FromForm] string Commerce,[FromForm] DepenseDTO depenseDTO)
+        public async Task<IActionResult> AjouterDepense([FromForm] string nomGarderie, [FromForm] DepenseDTO depenseDTO)
         {
             try
             {
-                await WebAPI.Instance.PostAsync("http://" + Program.HOST + ":" + Program.PORT + "/Depense/AjouterDepense?nomGarderie=" + nomGarderie + "&descriptionCategorie=" + CategorieDepense + "&descriptionCommerce=" + Commerce,  depenseDTO);
+                await WebAPI.Instance.PostAsync("http://" + Program.HOST + ":" + Program.PORT + "/Depense/AjouterDepense?nomGarderie=" + nomGarderie, depenseDTO);
+            }
+            catch (Exception e)
+            {
+                ViewBag.MessageErreur = e.Message;
+            }
+            return RedirectToAction("Index", "Depense", new { nomGarderie = nomGarderie });
+        }
+
+        [Route("Depense/SupprimerDepense")]
+        [HttpPost]
+        public async Task<IActionResult> SupprimerDepense([FromForm] string nomGarderie, [FromForm] DateTime DateTemps)
+        {
+            try
+            {
+                await WebAPI.Instance.PostAsync("http://" + Program.HOST + ":" + Program.PORT + "/Depense/SupprimerDepense?nomGarderie=" + nomGarderie + "&DateTemps=" + DateTemps, null);
+            }
+            catch (Exception e)
+            {
+                ViewBag.MessageErreur = e.Message;
+            }
+            return RedirectToAction("Index", "Depense", new { nomGarderie = nomGarderie });
+        }
+
+        [Route("Depense/FormModifierDepense")]
+        [HttpGet]
+        public async Task<IActionResult> FormModifierDepense([FromQuery] string nomGarderie, [FromQuery] string DateTemps)
+        {
+            try
+            {
+                ViewBag.nomGarderie = nomGarderie;
+                JsonValue DepenseJSON = await WebAPI.Instance.ExecuteGetAsync("http://" + Program.HOST + ":" + Program.PORT + "/Depense/ObtenirDepense?nomGarderie=" + nomGarderie + "&dateTemps=" + DateTemps);
+                DepenseDTO depenseDTO = JsonConvert.DeserializeObject<DepenseDTO>(DepenseJSON.ToString());
+
+                JsonValue listeCategoriesJson = await WebAPI.Instance.ExecuteGetAsync("http://" + Program.HOST + ":" + Program.PORT + "/CategorieDepense/ObtenirListeCategorieDepense");
+                ViewBag.listeCategorieDepenses = JsonConvert.DeserializeObject<List<CategorieDepenseDTO>>(listeCategoriesJson.ToString()).ToArray();
+
+                JsonValue listeCommercesJson = await WebAPI.Instance.ExecuteGetAsync("http://" + Program.HOST + ":" + Program.PORT + "/Commerce/ObtenirListeCommerce");
+                ViewBag.listeCommerces = JsonConvert.DeserializeObject<List<CommerceDTO>>(listeCommercesJson.ToString()).ToArray();
+                
+                return View(depenseDTO);
+            }
+            catch (Exception e)
+            {
+                ViewBag.MessageErreur = e.Message;
+            }
+            return View();
+        }
+
+        
+        [Route("Depense/ModifierDepense")]
+        [HttpPost]
+        public async Task<IActionResult> ModifierDepense([FromForm] DepenseDTO depenseDTO, [FromForm] string nomGarderie)
+        {
+            try
+            {
+                await WebAPI.Instance.PostAsync("http://" + Program.HOST + ":" + Program.PORT + "/Depense/ModifierDepense?nomGarderie=" + nomGarderie, depenseDTO);
             }
             catch (Exception e)
             {
