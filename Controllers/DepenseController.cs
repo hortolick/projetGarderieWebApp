@@ -72,5 +72,61 @@ namespace projetGarderieWebApp.Controllers
             }
             return RedirectToAction("Index", "Depense", new { nomGarderie = nomGarderie });
         }
+
+        [Route("Depense/SupprimerDepense")]
+        [HttpPost]
+        public async Task<IActionResult> SupprimerDepense([FromForm] string nomGarderie, [FromForm] DateTime DateTemps)
+        {
+            try
+            {
+                await WebAPI.Instance.PostAsync("http://" + Program.HOST + ":" + Program.PORT + "/Depense/SupprimerDepense?nomGarderie=" + nomGarderie + "&DateTemps=" + DateTemps, null);
+            }
+            catch (Exception e)
+            {
+                ViewBag.MessageErreur = e.Message;
+            }
+            return RedirectToAction("Index", "Depense", new { nomGarderie = nomGarderie });
+        }
+
+        [Route("Depense/FormModifierDepense")]
+        [HttpGet]
+        public async Task<IActionResult> FormModifierDepense([FromQuery] string nomGarderie, [FromQuery] string DateTemps)
+        {
+            try
+            {
+                ViewBag.nomGarderie = nomGarderie;
+                JsonValue DepenseJSON = await WebAPI.Instance.ExecuteGetAsync("http://" + Program.HOST + ":" + Program.PORT + "/Depense/ObtenirDepense?nomGarderie=" + nomGarderie + "&dateTemps=" + DateTemps);
+                DepenseDTO depenseDTO = JsonConvert.DeserializeObject<DepenseDTO>(DepenseJSON.ToString());
+
+                JsonValue listeCategoriesJson = await WebAPI.Instance.ExecuteGetAsync("http://" + Program.HOST + ":" + Program.PORT + "/CategorieDepense/ObtenirListeCategorieDepense");
+                ViewBag.listeCategorieDepenses = JsonConvert.DeserializeObject<List<CategorieDepenseDTO>>(listeCategoriesJson.ToString()).ToArray();
+
+                JsonValue listeCommercesJson = await WebAPI.Instance.ExecuteGetAsync("http://" + Program.HOST + ":" + Program.PORT + "/Commerce/ObtenirListeCommerce");
+                ViewBag.listeCommerces = JsonConvert.DeserializeObject<List<CommerceDTO>>(listeCommercesJson.ToString()).ToArray();
+                
+                return View(depenseDTO);
+            }
+            catch (Exception e)
+            {
+                ViewBag.MessageErreur = e.Message;
+            }
+            return View();
+        }
+
+        
+        [Route("Depense/ModifierDepense")]
+        [HttpPost]
+        public async Task<IActionResult> ModifierDepense([FromForm] DepenseDTO depenseDTO, [FromForm] string nomGarderie)
+        {
+            try
+            {
+                await WebAPI.Instance.PostAsync("http://" + Program.HOST + ":" + Program.PORT + "/Depense/ModifierDepense?nomGarderie=" + nomGarderie, depenseDTO);
+            }
+            catch (Exception e)
+            {
+                ViewBag.MessageErreur = e.Message;
+            }
+            return RedirectToAction("Index", "Depense", new { nomGarderie = nomGarderie });
+        }
     }
 }

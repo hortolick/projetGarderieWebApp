@@ -40,12 +40,16 @@ else
         </tr>
             <tr><td><input type="hidden" id="nomDepense" name="nomDepense"></td></tr>
             @foreach (DepenseDTO depense in ViewBag.listeDepenses)
-                {<tr>
+                {<form>
+                    <tr>
                     <td>@depense.DateTemps</td>
                     <td class="montant">@String.Format("{0:C}", @depense.Montant)</td>
                     <td class="montant">@String.Format("{0:C}", depense.MontantAdmissible)</td>
-                    @*td><input onclick="document.getElementById('nomDepense').value = '@depense.DateTemps'; this.form.action='/Depense/FormModifier'; this.form.method='get'; submit();" type="button" value="Modifier"><input onclick="if(confirm('confirmation silvouple')){document.getElementById('nomDepense').value = '@depense.Nom'; this.form.action='/Depense/SupprimerDepense'; this.form.method='post'; submit();}" type="button" value="Supprimer"></td>*@
-                </tr>}
+                    <input type="hidden" name="nomGarderie" value="@ViewBag.nomGarderie">
+                    <input type="hidden" id="DateTemps" value="@depense.DateTemps" name="DateTemps">
+                    <td><input onclick="document.getElementById('nomDepense').value = '@depense'; this.form.action='/Depense/FormModifierDepense'; this.form.method='get'; submit();" type="button" value="Modifier"></td>
+                    <td><input onclick="if(confirm('Veux tu')){this.form.action='/Depense/SupprimerDepense'; this.form.method='post'; submit();}" type="button" value="Supprimer">
+                </tr></form>}
         </table>
         
     </form>
@@ -56,15 +60,6 @@ else
         }
     </script>
     
-    <form asp-area="" asp-controller="Depense" asp-action="" method="get">
-    
-    <table>
-        <tbody>
-
-            
-        </tbody>
-    </table>
-    </form>
 
     <br />
     <h3>Ajouter une dépense</h3>

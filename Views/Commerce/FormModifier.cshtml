@@ -1,0 +1,31 @@
+﻿@using projetGarderieWebApp.Models
+@model CommerceDTO;
+@*Si erreur du côté serveur... affichage du message d'erreur...*@
+@if (ViewBag.MessageErreur != null)
+{
+    <br>
+    <h2 class="alert-danger">@ViewBag.MessageErreur</h2>
+}
+else
+{
+    <form asp-controller="Commerce" asp-action="ModifierCommerce" method="post">
+        <table>
+            <tbody>
+            <tr>
+                <td> <label asp-for="Description"></label></td>
+                <td>  <input class="bg-secondary" asp-for="Description" readonly> </td>
+            </tr>
+            <tr>
+                <td> <label asp-for="Adresse"></label></td>
+                <td>  <input asp-for="Adresse"> </td>
+            </tr>
+            <tr>
+                <td>  <label asp-for="Telephone"></label> </td>
+                <td>  <input asp-for="Telephone"> </td>
+            </tr>
+        </tbody></table>
+        <input class="btn btn-primary" type="submit" value="Modifier">
+        <input class="btn btn-primary" type="button" value="Annuler" onclick="history.back();" />
+        
+    </form>
+}
