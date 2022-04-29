@@ -1,5 +1,11 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
+<style>
+.border-md-right {
+  border-right: 1px solid black;
+  border-left: 1px solid black;
+}
+</style>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -18,18 +24,21 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
+                        <li class="nav-item border-md-right">
 
                             <a class="nav-link" asp-area="" asp-controller="Garderie" asp-action="Index">Garderie</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item border-md-right">
                             <a class="nav-link" asp-area="" asp-controller="Depense" asp-action="Index">Dépense</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item border-md-right">
                             <a class="nav-link" asp-area="" asp-controller="Commerce" asp-action="Index">Commerce</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item border-md-right">
                             <a class="nav-link" asp-area="" asp-controller="CategorieDepense" asp-action="Index">Catégorie Dépense</a>
+                        </li>
+                        <li class="nav-item border-md-right">
+                            <a class="nav-link" asp-area="" asp-controller="Enfant" asp-action="Index">Enfant</a>
                         </li>
                     </ul>
                 </div>

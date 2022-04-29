@@ -1,6 +1,5 @@
-﻿using projetGarderieAPIv2.Models;
-
-namespace projetGarderieAPIv2.DTOs
+﻿
+namespace projetGarderieWebApp.Models
 {
     public class PersonneDTO
     {
@@ -26,17 +25,6 @@ namespace projetGarderieAPIv2.DTOs
             Ville = ville;
             Province = province;
             Telephone = telephone;
-        }
-
-        public PersonneDTO(Personne personne)
-        {
-            Nom = personne.Nom;
-            Prenom=personne.Prenom;
-            DateNaissance=personne.DateNaissance;
-            Adresse=personne.Adresse;
-            Ville=personne.Ville;
-            Province=personne.Province;
-            Telephone=personne.Telephone;
         }
         #endregion
     }

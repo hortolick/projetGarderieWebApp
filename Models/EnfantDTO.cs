@@ -1,4 +1,4 @@
-﻿namespace projetGarderieAPIv2.DTOs
+﻿namespace projetGarderieWebApp.Models
 {
     public class EnfantDTO : PersonneDTO
     {
