@@ -94,6 +94,11 @@ namespace projetGarderieWebApp.Controllers
             return RedirectToAction("Index");
         }
 
+        /// <summary>
+        /// Méthode de service appelé lors de l'action supprimer.
+        /// </summary>
+        /// <param name="descriptionCategorie">La description de la catégorie à supprimer</param>
+        /// <returns>À l'index de la categorie depense</returns>
         [Route("CategorieDepense/SupprimerCategorieDepense")]
         [HttpPost]
         public async Task<IActionResult> SupprimerCategorieDepense([FromForm] string descriptionCategorie)
@@ -109,6 +114,10 @@ namespace projetGarderieWebApp.Controllers
             return RedirectToAction("Index", "CategorieDepense");
         }
 
+        /// <summary>
+        /// Méthode de service appelé lors de l'action vider liste.
+        /// </summary>
+        /// <returns>À l'index de la categorie depense</returns>
         [Route("CategorieDepense/ViderListeCategorieDepense")]
         [HttpPost]
         public async Task<IActionResult> ViderListeCategorieDepense()

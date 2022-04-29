@@ -26,7 +26,7 @@ namespace projetGarderieWebApp.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Méthode de service permettant d'ajouter un commerce
         /// </summary>
         [Route("Commerce/AjouterCommerce")]
         [HttpPost]
@@ -94,6 +94,11 @@ namespace projetGarderieWebApp.Controllers
             return RedirectToAction("Index");
         }
 
+        /// <summary>
+        /// Méthode de service appelé lors de l'action supprimer.
+        /// </summary>
+        /// <param name="descriptionCommerce">La description du commerce a supprimer</param>
+        /// <returns>À la page principale</returns>
         [Route("Commerce/SupprimerCommerce")]
         [HttpPost]
         public async Task<IActionResult> SupprimerCommerce([FromForm] string descriptionCommerce)
@@ -109,6 +114,10 @@ namespace projetGarderieWebApp.Controllers
             return RedirectToAction("Index", "Commerce");
         }
 
+        /// <summary>
+        /// Méthode de service appelé lors de l'action vider liste.
+        /// </summary>
+        /// <returns>À la page principale</returns>
         [Route("Commerce/ViderListeCommerce")]
         [HttpPost]
         public async Task<IActionResult> ViderListeCommerce()

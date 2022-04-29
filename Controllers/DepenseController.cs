@@ -19,19 +19,20 @@ namespace projetGarderieWebApp.Controllers
         [Route("Depense")]
         [Route("Depense/Index")]
         [HttpGet]
-        public async Task<IActionResult> Index([FromQuery]string nomGarderie)
+        public async Task<IActionResult> Index([FromQuery] string nomGarderie)
         {
             try
             {
                 JsonValue listeGarderiesJson = await WebAPI.Instance.ExecuteGetAsync("http://" + Program.HOST + ":" + Program.PORT + "/Garderie/ObtenirListeGarderie");
                 ViewBag.listeGarderies = JsonConvert.DeserializeObject<List<GarderieDTO>>(listeGarderiesJson.ToString()).ToArray();
-                if(nomGarderie == null)
+                if (nomGarderie == null)
                 {
-                    if(ViewBag.listeGarderies == null)
+                    if (ViewBag.listeGarderies == null)
                     {
                         ViewBag.MessageErreur = "Pas de garderies, veuillez ajouter une garderie";
                     }
-                    else{
+                    else
+                    {
                         nomGarderie = ViewBag.listeGarderies[0].Nom;
                     }
                 }
@@ -73,6 +74,12 @@ namespace projetGarderieWebApp.Controllers
             return RedirectToAction("Index", "Depense", new { nomGarderie = nomGarderie });
         }
 
+        /// <summary>
+        /// Permet de supprimer une dépense
+        /// </summary>
+        /// <param name="nomGarderie">Le nom de la garderie</param>
+        /// <param name="DateTemps">Le DateTime de la depense</param>
+        /// <returns></returns>
         [Route("Depense/SupprimerDepense")]
         [HttpPost]
         public async Task<IActionResult> SupprimerDepense([FromForm] string nomGarderie, [FromForm] DateTime DateTemps)
@@ -88,6 +95,12 @@ namespace projetGarderieWebApp.Controllers
             return RedirectToAction("Index", "Depense", new { nomGarderie = nomGarderie });
         }
 
+        /// <summary>
+        /// Permet de rediriger vers la page de modification d'une dépense
+        /// </summary>
+        /// <param name="nomGarderie">Le nom de la garderie</param>
+        /// <param name="DateTemps">Le DateTime de la depense</param>
+        /// <returns></returns>
         [Route("Depense/FormModifierDepense")]
         [HttpGet]
         public async Task<IActionResult> FormModifierDepense([FromQuery] string nomGarderie, [FromQuery] string DateTemps)
@@ -103,7 +116,7 @@ namespace projetGarderieWebApp.Controllers
 
                 JsonValue listeCommercesJson = await WebAPI.Instance.ExecuteGetAsync("http://" + Program.HOST + ":" + Program.PORT + "/Commerce/ObtenirListeCommerce");
                 ViewBag.listeCommerces = JsonConvert.DeserializeObject<List<CommerceDTO>>(listeCommercesJson.ToString()).ToArray();
-                
+
                 return View(depenseDTO);
             }
             catch (Exception e)
@@ -113,7 +126,12 @@ namespace projetGarderieWebApp.Controllers
             return View();
         }
 
-        
+        /// <summary>
+        /// Permet de modifier une dépense
+        /// </summary>
+        /// <param name="depenseDTO">La dépense à modifier</param>
+        /// <param name="nomGarderie">Le nom de la garderie à laquelle la dépense appartient</param>
+        /// <returns></returns>
         [Route("Depense/ModifierDepense")]
         [HttpPost]
         public async Task<IActionResult> ModifierDepense([FromForm] DepenseDTO depenseDTO, [FromForm] string nomGarderie)
