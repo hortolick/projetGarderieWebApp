@@ -18,8 +18,8 @@ else
     <form asp-area="" asp-controller="Enfant" asp-action="ViderListeEnfant" method="post">
         <table>
         <tr>
-            <th>Nom</th>
             <th>Prénom</th>
+            <th>Nom</th>
             <th>Date naissance</th>
             <th>Adresse</th>
             <th>Ville</th>
@@ -30,8 +30,8 @@ else
             <tr><td><input type="hidden" id="nomEnfant" name="nomEnfant"></td></tr>
             @foreach (EnfantDTO enfant in ViewBag.listeEnfants)
                 {<tr>
-                    <td>@enfant.Nom</td>
                     <td>@enfant.Prenom</td>
+                    <td>@enfant.Nom</td>
                     <td>@enfant.DateNaissance</td>
                     <td>@enfant.Adresse</td>
                     <td>@enfant.Ville</td>
@@ -51,15 +51,6 @@ else
         }
     </script>
     
-    <form asp-area="" asp-controller="Enfant" asp-action="" method="get">
-    
-    <table>
-        <tbody>
-
-            
-        </tbody>
-    </table>
-    </form>
 
     <br />
     <h3>Ajouter une Enfant</h3>
@@ -69,12 +60,12 @@ else
         <table>
             <tbody>
             <tr>
-                <td><label asp-for="Nom"></label></td>
-                <td> <input asp-for="Nom"> </td>
-            </tr>
-            <tr>
                 <td><label asp-for="Prenom"></label></td>
                 <td> <input asp-for="Prenom"> </td>
+            </tr>
+            <tr>
+                <td><label asp-for="Nom"></label></td>
+                <td> <input asp-for="Nom"> </td>
             </tr>
             <tr>
                 <td> <label asp-for="DateNaissance"></label></td>
