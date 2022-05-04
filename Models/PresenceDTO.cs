@@ -36,6 +36,10 @@
             NomGarderie = nomGarderie;
             Enfant = enfant;
         }
+
+        public PresenceDTO() { }
+            
+        
         #endregion
     }
 }
