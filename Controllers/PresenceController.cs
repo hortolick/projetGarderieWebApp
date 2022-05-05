@@ -9,20 +9,22 @@ using System.Threading.Tasks;
 
 namespace projetGarderieWebApp.Controllers
 {
-    public class DepenseController : Controller
+    public class PresenceController : Controller
     {
         /// <summary>
-        /// Obtenir la liste des depenses
+        /// Obtenir la liste des presences
         /// </summary>
-        /// <param name="nomGarderie">Le nom de la garderie associée avec les dépenses</param>
+        /// <param name="nomGarderie">Le nom de la garderie associée avec les presences</param>
         /// <returns></returns>
-        [Route("Depense")]
-        [Route("Depense/Index")]
+        [Route("Presence")]
+        [Route("Presence/Index")]
         [HttpGet]
         public async Task<IActionResult> Index([FromQuery] string nomGarderie)
         {
             try
             {
+
+                
                 JsonValue listeGarderiesJson = await WebAPI.Instance.ExecuteGetAsync("http://" + Program.HOST + ":" + Program.PORT + "/Garderie/ObtenirListeGarderie");
                 ViewBag.listeGarderies = JsonConvert.DeserializeObject<List<GarderieDTO>>(listeGarderiesJson.ToString()).ToArray();
                 if (nomGarderie == null)
@@ -36,14 +38,11 @@ namespace projetGarderieWebApp.Controllers
                         nomGarderie = ViewBag.listeGarderies[0].Nom;
                     }
                 }
-                JsonValue listeCategoriesJson = await WebAPI.Instance.ExecuteGetAsync("http://" + Program.HOST + ":" + Program.PORT + "/CategorieDepense/ObtenirListeCategorieDepense");
-                ViewBag.listeCategorieDepenses = JsonConvert.DeserializeObject<List<CategorieDepenseDTO>>(listeCategoriesJson.ToString()).ToArray();
+                JsonValue listeEnfantsJson = await WebAPI.Instance.ExecuteGetAsync("http://" + Program.HOST + ":" + Program.PORT + "/Enfant/ObtenirListeEnfant");
+                ViewBag.listeEnfants = JsonConvert.DeserializeObject<List<EnfantDTO>>(listeEnfantsJson.ToString()).ToArray();
 
-                JsonValue listeCommercesJson = await WebAPI.Instance.ExecuteGetAsync("http://" + Program.HOST + ":" + Program.PORT + "/Commerce/ObtenirListeCommerce");
-                ViewBag.listeCommerces = JsonConvert.DeserializeObject<List<CommerceDTO>>(listeCommercesJson.ToString()).ToArray();
-
-                JsonValue listeDepensesJson = await WebAPI.Instance.ExecuteGetAsync("http://" + Program.HOST + ":" + Program.PORT + "/Depense/ObtenirListeDepense?nomGarderie=" + nomGarderie);
-                ViewBag.listeDepenses = JsonConvert.DeserializeObject<List<DepenseDTO>>(listeDepensesJson.ToString()).ToArray();
+                JsonValue listePresencesJson = await WebAPI.Instance.ExecuteGetAsync("http://" + Program.HOST + ":" + Program.PORT + "/Presence/ObtenirListePresenceGarderie?nomGarderie=" + nomGarderie);
+                ViewBag.listePresences = JsonConvert.DeserializeObject<List<PresenceDTO>>(listePresencesJson.ToString()).ToArray();
                 ViewBag.nomGarderie = nomGarderie;
             }
             catch (Exception e)
@@ -54,45 +53,57 @@ namespace projetGarderieWebApp.Controllers
         }
 
         /// <summary>
-        /// Permet d'ajouter une dépense
+        /// Permet d'ajouter une presence
         /// </summary>
-        /// <param name="nomGarderie">le nom de la garderie</param>
-        /// <param name="depenseDTO">Le DTO de la dépense à ajouter</param>
+        /// <param name="infos">Les infos sur l'enfant selectionnes a partir du dropdown</param>
+        /// <param name="presence">Le DTO de la presence à ajouter</param>
         /// <returns></returns>
-        [Route("Depense/AjouterDepense")]
+        [Route("Presence/AjouterPresence")]
         [HttpPost]
-        public async Task<IActionResult> AjouterDepense([FromForm] string nomGarderie, [FromForm] DepenseDTO depenseDTO)
+        public async Task<IActionResult> AjouterPresence([FromForm] string infos, [FromForm] PresenceDTO presence)
         {
+            string[] parsedInfos = infos.Split("&");
+
+            string Nom = parsedInfos[0];
+            string Prenom = parsedInfos[1];
+            string Date = parsedInfos[2];
+
+            EnfantDTO enfantDTO = new EnfantDTO(Prenom, Nom, Date);
+
+            presence.Enfant = enfantDTO;
+
+
             try
             {
-                await WebAPI.Instance.PostAsync("http://" + Program.HOST + ":" + Program.PORT + "/Depense/AjouterDepense?nomGarderie=" + nomGarderie, depenseDTO);
+                await WebAPI.Instance.PostAsync("http://" + Program.HOST + ":" + Program.PORT + "/Presence/AjouterPresence?nomGarderie", presence);
             }
             catch (Exception e)
             {
                 ViewBag.MessageErreur = e.Message;
             }
-            return RedirectToAction("Index", "Depense", new { nomGarderie = nomGarderie });
+            return RedirectToAction("Index", "Presence", new { nomGarderie = presence.NomGarderie });
         }
 
+        /*
         /// <summary>
         /// Permet de supprimer une dépense
         /// </summary>
         /// <param name="nomGarderie">Le nom de la garderie</param>
         /// <param name="DateTemps">Le DateTime de la depense</param>
         /// <returns></returns>
-        [Route("Depense/SupprimerDepense")]
+        [Route("Presence/SupprimerPresence")]
         [HttpPost]
-        public async Task<IActionResult> SupprimerDepense([FromForm] string nomGarderie, [FromForm] DateTime DateTemps)
+        public async Task<IActionResult> SupprimerPresence([FromForm] string nomGarderie, [FromForm] DateTime DateTemps)
         {
             try
             {
-                await WebAPI.Instance.PostAsync("http://" + Program.HOST + ":" + Program.PORT + "/Depense/SupprimerDepense?nomGarderie=" + nomGarderie + "&DateTemps=" + DateTemps, null);
+                await WebAPI.Instance.PostAsync("http://" + Program.HOST + ":" + Program.PORT + "/Presence/SupprimerPresence?nomGarderie=" + nomGarderie + "&DateTemps=" + DateTemps, null);
             }
             catch (Exception e)
             {
                 ViewBag.MessageErreur = e.Message;
             }
-            return RedirectToAction("Index", "Depense", new { nomGarderie = nomGarderie });
+            return RedirectToAction("Index", "Presence", new { nomGarderie = nomGarderie });
         }
 
         /// <summary>
@@ -101,18 +112,18 @@ namespace projetGarderieWebApp.Controllers
         /// <param name="nomGarderie">Le nom de la garderie</param>
         /// <param name="DateTemps">Le DateTime de la depense</param>
         /// <returns></returns>
-        [Route("Depense/FormModifierDepense")]
+        [Route("Presence/FormModifierPresence")]
         [HttpGet]
-        public async Task<IActionResult> FormModifierDepense([FromQuery] string nomGarderie, [FromQuery] string DateTemps)
+        public async Task<IActionResult> FormModifierPresence([FromQuery] string nomGarderie, [FromQuery] string DateTemps)
         {
             try
             {
                 ViewBag.nomGarderie = nomGarderie;
-                JsonValue DepenseJSON = await WebAPI.Instance.ExecuteGetAsync("http://" + Program.HOST + ":" + Program.PORT + "/Depense/ObtenirDepense?nomGarderie=" + nomGarderie + "&dateTemps=" + DateTemps);
-                DepenseDTO depenseDTO = JsonConvert.DeserializeObject<DepenseDTO>(DepenseJSON.ToString());
+                JsonValue PresenceJSON = await WebAPI.Instance.ExecuteGetAsync("http://" + Program.HOST + ":" + Program.PORT + "/Presence/ObtenirPresence?nomGarderie=" + nomGarderie + "&dateTemps=" + DateTemps);
+                PresenceDTO depenseDTO = JsonConvert.DeserializeObject<PresenceDTO>(PresenceJSON.ToString());
 
-                JsonValue listeCategoriesJson = await WebAPI.Instance.ExecuteGetAsync("http://" + Program.HOST + ":" + Program.PORT + "/CategorieDepense/ObtenirListeCategorieDepense");
-                ViewBag.listeCategorieDepenses = JsonConvert.DeserializeObject<List<CategorieDepenseDTO>>(listeCategoriesJson.ToString()).ToArray();
+                JsonValue listeCategoriesJson = await WebAPI.Instance.ExecuteGetAsync("http://" + Program.HOST + ":" + Program.PORT + "/CategoriePresence/ObtenirListeCategoriePresence");
+                ViewBag.listeCategoriePresences = JsonConvert.DeserializeObject<List<CategoriePresenceDTO>>(listeCategoriesJson.ToString()).ToArray();
 
                 JsonValue listeCommercesJson = await WebAPI.Instance.ExecuteGetAsync("http://" + Program.HOST + ":" + Program.PORT + "/Commerce/ObtenirListeCommerce");
                 ViewBag.listeCommerces = JsonConvert.DeserializeObject<List<CommerceDTO>>(listeCommercesJson.ToString()).ToArray();
@@ -132,19 +143,20 @@ namespace projetGarderieWebApp.Controllers
         /// <param name="depenseDTO">La dépense à modifier</param>
         /// <param name="nomGarderie">Le nom de la garderie à laquelle la dépense appartient</param>
         /// <returns></returns>
-        [Route("Depense/ModifierDepense")]
+        [Route("Presence/ModifierPresence")]
         [HttpPost]
-        public async Task<IActionResult> ModifierDepense([FromForm] DepenseDTO depenseDTO, [FromForm] string nomGarderie)
+        public async Task<IActionResult> ModifierPresence([FromForm] PresenceDTO depenseDTO, [FromForm] string nomGarderie)
         {
             try
             {
-                await WebAPI.Instance.PostAsync("http://" + Program.HOST + ":" + Program.PORT + "/Depense/ModifierDepense?nomGarderie=" + nomGarderie, depenseDTO);
+                await WebAPI.Instance.PostAsync("http://" + Program.HOST + ":" + Program.PORT + "/Presence/ModifierPresence?nomGarderie=" + nomGarderie, depenseDTO);
             }
             catch (Exception e)
             {
                 ViewBag.MessageErreur = e.Message;
             }
-            return RedirectToAction("Index", "Depense", new { nomGarderie = nomGarderie });
+            return RedirectToAction("Index", "Presence", new { nomGarderie = nomGarderie });
         }
+        */
     }
 }

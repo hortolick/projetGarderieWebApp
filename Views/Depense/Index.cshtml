@@ -47,8 +47,8 @@ else
                     <td class="montant">@String.Format("{0:C}", depense.MontantAdmissible)</td>
                     <input type="hidden" name="nomGarderie" value="@ViewBag.nomGarderie">
                     <input type="hidden" id="DateTemps" value="@depense.DateTemps" name="DateTemps">
-                    <td><input onclick="document.getElementById('nomDepense').value = '@depense'; this.form.action='/Depense/FormModifierDepense'; this.form.method='get'; submit();" type="button" value="Modifier"></td>
-                    <td><input onclick="if(confirm('Veux tu')){this.form.action='/Depense/SupprimerDepense'; this.form.method='post'; submit();}" type="button" value="Supprimer">
+                    <td><input class="btn btn-primary" onclick="document.getElementById('nomDepense').value = '@depense'; this.form.action='/Depense/FormModifierDepense'; this.form.method='get'; submit();" type="button" value="Modifier"></td>
+                    <td><input class="btn btn-primary" onclick="if(confirm('Veux tu')){this.form.action='/Depense/SupprimerDepense'; this.form.method='post'; submit();}" type="button" value="Supprimer">
                 </tr></form>}
         </table>
         
@@ -92,7 +92,7 @@ else
                 <td> <input asp-for="Montant" type="number"> </td>
             </tr>
                 <input type="hidden" name="nomGarderie" value="@ViewBag.nomGarderie">
-            <tr><td><input type="submit" value="Ajouter"></td></tr>   
+            <tr><td><input class="btn btn-primary" type="submit" value="Ajouter"></td></tr>   
         </tbody>
          
     </table>

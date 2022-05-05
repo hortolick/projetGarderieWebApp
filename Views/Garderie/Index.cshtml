@@ -8,86 +8,81 @@
 }
 else
 {
-
-
     @*Affichage de la liste des garderies...*@
     <br>
     <h3>Liste des Garderie(s) (@ViewBag.listeGarderies.Length Garderie(s)) :</h3>
     <br>
-    
     <form asp-area="" asp-controller="Garderie" asp-action="ViderListeGarderie" method="post">
-        <table>
-        <tr>
-            <th>Nom</th>
-            <th>Adresse</th>
-            <th>Ville</th>
-            <th class="pr-2">Province</th>
-            <th>Téléphone</th>
-            <th><input class="btn btn-danger" id="vidation" onclick="if(confirm('Voulez vous?')){this.form.action='/Garderie/ViderListeGarderie'; this.form.method='post';submit();}" type="button" value="Vider liste Garderies"></th>
-        </tr>
-            <tr><td><input type="hidden" id="nomGarderie" name="nomGarderie"></td></tr>
-            @foreach (GarderieDTO garderie in ViewBag.listeGarderies)
-                {<tr>
-                    <td>@garderie.Nom</td>
-                    <td>@garderie.Adresse</td>
-                    <td>@garderie.Ville</td>
-                    <td>@garderie.Province</td>
-                    <td class="pr-2">@garderie.Telephone</td>
-                    <td><input class="btn btn-primary" onclick="document.getElementById('nomGarderie').value = '@garderie.Nom'; this.form.action='/Garderie/FormModifier'; this.form.method='get'; submit();" type="button" value="Modifier">
-                        <input class="btn btn-primary" onclick="if(confirm('confirmation silvouple')){document.getElementById('nomGarderie').value = '@garderie.Nom'; this.form.action='/Garderie/SupprimerGarderie'; this.form.method='post'; submit();}" type="button" value="Supprimer"></td>
-                    
-                </tr>}
-        </table>
-        
+       <table>
+          <tr>
+             <th>Nom</th>
+             <th>Adresse</th>
+             <th>Ville</th>
+             <th class="pr-2">Province</th>
+             <th>Téléphone</th>
+             <th><input class="btn btn-danger" id="vidation" onclick="if(confirm('Voulez vous?')){this.form.action='/Garderie/ViderListeGarderie'; this.form.method='post';submit();}" type="button" value="Vider liste Garderies"></th>
+          </tr>
+          <tr>
+             <td><input type="hidden" id="nomGarderie" name="nomGarderie"></td>
+          </tr>
+          @foreach (GarderieDTO garderie in ViewBag.listeGarderies)
+          {
+          <tr>
+             <td>@garderie.Nom</td>
+             <td>@garderie.Adresse</td>
+             <td>@garderie.Ville</td>
+             <td>@garderie.Province</td>
+             <td class="pr-2">@garderie.Telephone</td>
+             <td><input class="btn btn-primary" onclick="document.getElementById('nomGarderie').value = '@garderie.Nom'; this.form.action='/Garderie/FormModifier'; this.form.method='get'; submit();" type="button" value="Modifier">
+                <input class="btn btn-primary" onclick="if(confirm('confirmation silvouple')){document.getElementById('nomGarderie').value = '@garderie.Nom'; this.form.action='/Garderie/SupprimerGarderie'; this.form.method='post'; submit();}" type="button" value="Supprimer">
+             </td>
+          </tr>
+          }
+       </table>
     </form>
-    
     <script>
-        if(@ViewBag.listeGarderies.Length==0){
-            document.getElementById('vidation').style.display = "none";
-        }
+       if(@ViewBag.listeGarderies.Length==0){
+           document.getElementById('vidation').style.display = "none";
+       }
     </script>
-    
-    <form asp-area="" asp-controller="Garderie" asp-action="" method="get">
-    
-    <table>
-        <tbody>
-
-            
-        </tbody>
-    </table>
-    </form>
-
     <br />
-    <h3>Ajouter une Garderie</h3>
-    <br />
-
-    <form asp-controller="Garderie" asp-action="AjouterGarderie" method="post">
-        <table>
-            <tbody><tr>
-                <td><label asp-for="Nom"></label></td>
-                <td> <input asp-for="Nom"> </td>
-            </tr>
-            <tr>
-                <td> <label asp-for="Adresse"></label></td>
-                <td> <input asp-for="Adresse"> </td>
-            </tr>
-            <tr>
-                <td> <label asp-for="Ville"></label></td>
-                <td> <input asp-for="Ville"> </td>
-            </tr>
-            <tr>
-                <td> <label asp-for="Province"></label> </td>
-                <td> <input asp-for="Province"> </td>
-            </tr>
-            <tr>
-                <td> <label asp-for="Telephone"></label> </td>
-                <td> <input asp-for="Telephone"> </td>
-            </tr>
-            <tr><td><input type="submit" value="Ajouter"></td></tr>   
-        </tbody>
-         
-    </table>
-        
-    </form>
+    <div class="container">
+       <div class="row">
+          <div class="col-sm">
+             <h3>Ajouter une Garderie</h3>
+             <form style="width: 75%;" asp-controller="Garderie" asp-action="AjouterGarderie" method="post">
+                <table >
+                   <tbody>
+                      <tr>
+                         <td><label asp-for="Nom"></label></td>
+                         <td> <input asp-for="Nom"> </td>
+                      </tr>
+                      <tr>
+                         <td> <label asp-for="Adresse"></label></td>
+                         <td> <input asp-for="Adresse"> </td>
+                      </tr>
+                      <tr>
+                         <td> <label asp-for="Ville"></label></td>
+                         <td> <input asp-for="Ville"> </td>
+                      </tr>
+                      <tr>
+                         <td> <label asp-for="Province"></label> </td>
+                         <td> <input asp-for="Province"> </td>
+                      </tr>
+                      <tr>
+                         <td> <label asp-for="Telephone"></label> </td>
+                         <td> <input asp-for="Telephone"> </td>
+                      </tr>
+                      <tr>
+                         <td><input type="submit" value="Ajouter"></td>
+                      </tr>
+                   </tbody>
+                </table>
+             </form>
+          </div>
+          <div class="col-sm">
+             <img class="mw-100" src="https://www.educatout.com/images/Amenagement-dune-garderie-securitaire-FB.jpg">
+          </div>
+       </div>
+    </div>
 }
-

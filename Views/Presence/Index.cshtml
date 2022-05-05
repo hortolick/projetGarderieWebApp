@@ -1,0 +1,91 @@
+﻿@using projetGarderieWebApp.Models
+@model PresenceDTO;
+
+@*Si erreur du côté serveur... affichage du message d'erreur...*@
+@if (ViewBag.MessageErreur != null)
+{
+    <br>
+    <h2 class="alert-danger">@ViewBag.MessageErreur</h2>
+}
+else
+{
+    <h1>Sélectionner un enfant : </h1>
+    <form method="get" action="">
+        <select name="nomGarderie" onchange="this.form.submit()" id="garderie">
+            @foreach (GarderieDTO garderie in ViewBag.listeGarderies)
+            {
+                @if(@garderie.Nom.Equals(ViewBag.nomGarderie))
+                {
+                    <option value=@garderie.Nom action="garderie" selected>@garderie.Nom</option>
+                }
+                else
+                {
+                    <option value=@garderie.Nom action="garderie">@garderie.Nom</option>
+                }
+            }
+        </select>
+    </form>
+    @*Affichage de la liste des depenses...*@
+    <br>
+    <h3>Liste des Présence(s) (@ViewBag.listePresences.Length Présence(s)) :</h3>
+    <br>
+    
+    <form asp-area="" asp-controller="Presence" asp-action="ViderListePresence" method="post">
+        <table>
+        <tr>
+            <th>Prenom</th>
+            <th>Nom</th>
+            <th>Enfant</th>
+            @*<th><input id="vidation" onclick="if(confirm('Voulez vous?')){this.form.action='/Presence/ViderListePresence'; this.form.method='post';submit();}" type="button" value="Vider liste Presences"></th>*@
+        </tr>
+            <tr><td><input type="hidden" id="nomPresence" name="nomPresence"></td></tr>
+            @foreach (PresenceDTO presence in ViewBag.listePresences)
+                {<form>
+                    <tr>
+                    <td>@presence.Enfant.Prenom</td>
+                    <td>@presence.Enfant.Nom</td>
+                    <td>@presence.Date</td>
+                    <input type="hidden" name="nomGarderie" value="@presence.NomGarderie">
+                    <td><input class="btn btn-primary" onclick="document.getElementById('nomPresence').value = '@presence'; this.form.action='/Presence/FormModifierPresence'; this.form.method='get'; submit();" type="button" value="Modifier"></td>
+                    <td><input class="btn btn-primary" onclick="if(confirm('Veux tu')){this.form.action='/Presence/SupprimerPresence'; this.form.method='post'; submit();}" type="button" value="Supprimer">
+                </tr></form>}
+        </table>
+        
+    </form>
+    
+    <script>
+        if(@ViewBag.listePresences.Length==0){
+            document.getElementById('vidation').style.display = "none";
+        }
+    </script>
+    
+
+    <br />
+    <h3>Ajouter une dépense</h3>
+    <br />
+
+    <form asp-controller="Presence" asp-action="AjouterPresence" method="post">
+        <label>Enfant</label>
+        <select name="infos">
+            @foreach (EnfantDTO enfant in ViewBag.listeEnfants)
+            {
+                {
+                    <option value="@enfant.Prenom&@enfant.Nom&@enfant.DateNaissance">@enfant.Prenom @enfant.Nom</option>
+                }
+            }
+        </select>
+        <table>
+            <tbody>
+            <tr>
+                <td> <label asp-for="Date"></label></td>
+                <td> <input asp-for="Date" type="date" required> </td>
+            </tr>
+                <input type="hidden" name="nomGarderie" value="@ViewBag.nomGarderie">
+            <tr><td><input class="btn btn-primary" type="submit" value="Ajouter"></td></tr>   
+        </tbody>
+         
+    </table>
+        
+    </form>
+}
+
