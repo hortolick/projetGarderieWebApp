@@ -12,9 +12,9 @@ namespace projetGarderieWebApp.Controllers
     public class PresenceController : Controller
     {
         /// <summary>
-        /// Obtenir la liste des depenses
+        /// Obtenir la liste des presences
         /// </summary>
-        /// <param name="nomGarderie">Le nom de la garderie associée avec les dépenses</param>
+        /// <param name="nomGarderie">Le nom de la garderie associée avec les presences</param>
         /// <returns></returns>
         [Route("Presence")]
         [Route("Presence/Index")]
@@ -53,10 +53,10 @@ namespace projetGarderieWebApp.Controllers
         }
 
         /// <summary>
-        /// Permet d'ajouter une dépense
+        /// Permet d'ajouter une presence
         /// </summary>
-        /// <param name="nomGarderie">le nom de la garderie</param>
-        /// <param name="depenseDTO">Le DTO de la dépense à ajouter</param>
+        /// <param name="infos">Les infos sur l'enfant selectionnes a partir du dropdown</param>
+        /// <param name="presence">Le DTO de la presence à ajouter</param>
         /// <returns></returns>
         [Route("Presence/AjouterPresence")]
         [HttpPost]
@@ -64,8 +64,8 @@ namespace projetGarderieWebApp.Controllers
         {
             string[] parsedInfos = infos.Split("&");
 
-            string Prenom = parsedInfos[0];
-            string Nom = parsedInfos[1];
+            string Nom = parsedInfos[0];
+            string Prenom = parsedInfos[1];
             string Date = parsedInfos[2];
 
             EnfantDTO enfantDTO = new EnfantDTO(Prenom, Nom, Date);
