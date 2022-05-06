@@ -33,9 +33,11 @@ else
     <form asp-area="" asp-controller="Presence" asp-action="ViderListePresence" method="post">
         <table>
         <tr>
-            <th>Prenom</th>
-            <th>Nom</th>
-            <th>Enfant</th>
+            <th>Prenom enfant</th>
+            <th>Nom enfant</th>
+            <th>Prenom éducateur</th>
+            <th>Nom éducateur</th>
+            <th>Date</th>
             @*<th><input id="vidation" onclick="if(confirm('Voulez vous?')){this.form.action='/Presence/ViderListePresence'; this.form.method='post';submit();}" type="button" value="Vider liste Presences"></th>*@
         </tr>
             <tr><td><input type="hidden" id="nomPresence" name="nomPresence"></td></tr>
@@ -44,6 +46,8 @@ else
                     <tr>
                     <td>@presence.Enfant.Prenom</td>
                     <td>@presence.Enfant.Nom</td>
+                    <td>@presence.Educateur.Prenom</td>
+                    <td>@presence.Educateur.Nom</td>
                     <td>@presence.Date</td>
                     <input type="hidden" name="nomGarderie" value="@presence.NomGarderie">
                     <td><input class="btn btn-primary" onclick="document.getElementById('nomPresence').value = '@presence'; this.form.action='/Presence/FormModifierPresence'; this.form.method='get'; submit();" type="button" value="Modifier"></td>
@@ -71,6 +75,15 @@ else
             {
                 {
                     <option value="@enfant.Prenom&@enfant.Nom&@enfant.DateNaissance">@enfant.Prenom @enfant.Nom</option>
+                }
+            }
+        </select>
+        <label>Éducateur</label>
+        <select name="infos">
+            @foreach (EducateurDTO educateur in ViewBag.listeEducateurs)
+            {
+                {
+                    <option value="@educateur.Prenom&@educateur.Nom&@educateur.DateNaissance">@educateur.Prenom @educateur.Nom</option>
                 }
             }
         </select>

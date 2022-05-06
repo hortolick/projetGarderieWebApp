@@ -60,7 +60,7 @@ namespace projetGarderieWebApp.Controllers
         /// <returns></returns>
         [Route("Presence/AjouterPresence")]
         [HttpPost]
-        public async Task<IActionResult> AjouterPresence([FromForm] string infos, [FromForm] PresenceDTO presence)
+        public async Task<IActionResult> AjouterPresence([FromForm] string infos, [FromForm] string infosEducateur, [FromForm] PresenceDTO presence)
         {
             string[] parsedInfos = infos.Split("&");
 
@@ -71,6 +71,13 @@ namespace projetGarderieWebApp.Controllers
             EnfantDTO enfantDTO = new EnfantDTO(Nom, Prenom, Date);
 
             presence.Enfant = enfantDTO;
+
+            string[] parsedInfosEducateur = infosEducateur.Split("&");
+
+
+            EducateurDTO educateurDTO = new EducateurDTO(parsedInfos[1], parsedInfos[0], parsedInfos[2]);
+
+            presence.Educateur = educateurDTO;
 
 
             try

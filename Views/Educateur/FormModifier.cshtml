@@ -1,0 +1,48 @@
+﻿@using projetGarderieWebApp.Models
+@model EducateurDTO;
+@*Si erreur du côté serveur... affichage du message d'erreur...*@
+@if (ViewBag.MessageErreur != null)
+{
+    <br>
+    <h2 class="alert-danger">@ViewBag.MessageErreur</h2>
+}
+else
+{
+    <form asp-controller="Educateur" asp-action="ModifierEducateur" method="post">
+        <table>
+            <tbody>
+            <tr>
+                <td><label asp-for="Prenom"></label></td>
+                <td> <input class="form-control" asp-for="Prenom" readonly> </td>
+            </tr>
+            <tr>
+                <td><label asp-for="Nom"></label></td>
+                <td> <input class="form-control" asp-for="Nom" readonly> </td>
+            </tr>
+            <tr>
+                <td> <label asp-for="DateNaissance"></label></td>
+                <td> <input class="form-control" asp-for="DateNaissance" readonly> </td>
+            </tr>
+            <tr>
+                <td> <label asp-for="Adresse"></label></td>
+                <td> <input class="form-control" asp-for="Adresse"> </td>
+            </tr>
+            <tr>
+                <td> <label asp-for="Ville"></label></td>
+                <td> <input class="form-control" asp-for="Ville"> </td>
+            </tr>
+            <tr>
+                <td> <label asp-for="Province"></label> </td>
+                <td> <input class="form-control" asp-for="Province"> </td>
+            </tr>
+            <tr>
+                <td> <label asp-for="Telephone"></label> </td>
+                <td> <input class="form-control" asp-for="Telephone"> </td>
+            </tr>
+            <tr><td><input type="submit" value="Ajouter"></td></tr>   
+        </tbody>
+         
+    </table>
+        
+    </form>
+}

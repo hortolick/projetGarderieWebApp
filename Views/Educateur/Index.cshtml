@@ -1,0 +1,97 @@
+﻿@using projetGarderieWebApp.Models
+@model EducateurDTO;
+@*Si erreur du côté serveur... affichage du message d'erreur...*@
+@if (ViewBag.MessageErreur != null)
+{
+    <br>
+    <h2 class="alert-danger">@ViewBag.MessageErreur</h2>
+}
+else
+{
+
+
+    @*Affichage de la liste des educateurs...*@
+    <br>
+    <h3>Liste des Educateur(s) (@ViewBag.listeEducateurs.Length Educateur(s)) :</h3>
+    <br>
+    
+    <form asp-area="" asp-controller="Educateur" asp-action="ViderListeEducateur" method="post">
+        <table>
+        <tr>
+            <th>Prénom</th>
+            <th>Nom</th>
+            <th>Date naissance</th>
+            <th>Adresse</th>
+            <th>Ville</th>
+            <th class="pr-2">Province</th>
+            <th>Téléphone</th>
+            <th><input class="btn btn-danger" id="vidation" onclick="if(confirm('Voulez vous?')){this.form.action='/Educateur/ViderListeEducateur'; this.form.method='post';submit();}" type="button" value="Vider liste Educateurs"></th>
+        </tr>
+            <tr><td><input type="hidden" id="infos" name="infos"></td></tr>
+            @foreach (EducateurDTO educateur in ViewBag.listeEducateurs)
+                {<tr>
+                    <td>@educateur.Prenom</td>
+                    <td>@educateur.Nom</td>
+                    <td>@educateur.DateNaissance</td>
+                    <td>@educateur.Adresse</td>
+                    <td>@educateur.Ville</td>
+                    <td>@educateur.Province</td>
+                    <td class="pr-2">@educateur.Telephone</td>
+                    <td><input class="btn btn-primary" onclick="document.getElementById('infos').value = '@educateur.Nom&@educateur.Prenom&@educateur.DateNaissance'; this.form.action='/Educateur/FormModifier'; this.form.method='get'; submit();" type="button" value="Modifier">
+                        <input class="btn btn-primary" onclick="if(confirm('confirmation silvouple')){document.getElementById('infos').value = '@educateur.Nom&@educateur.Prenom&@educateur.DateNaissance'; this.form.action='/Educateur/SupprimerEducateur'; this.form.method='post'; submit();}" type="button" value="Supprimer"></td>
+                    
+                </tr>}
+        </table>
+        
+    </form>
+    
+    <script>
+        if(@ViewBag.listeEducateurs.Length==0){
+            document.getElementById('vidation').style.display = "none";
+        }
+    </script>
+    
+
+    <br />
+    <h3>Ajouter un éducateur</h3>
+    <br />
+
+    <form asp-controller="Educateur" asp-action="AjouterEducateur" method="post">
+        <table>
+            <tbody>
+            <tr>
+                <td><label asp-for="Prenom"></label></td>
+                <td> <input class="form-control" asp-for="Prenom"> </td>
+            </tr>
+            <tr>
+                <td><label asp-for="Nom"></label></td>
+                <td> <input class="form-control" asp-for="Nom"> </td>
+            </tr>
+            <tr>
+                <td> <label asp-for="DateNaissance">Date de naissance</label></td>
+                <td> <input class="form-control" asp-for="DateNaissance" type="date"> </td>
+            </tr>
+            <tr>
+                <td> <label asp-for="Adresse"></label></td>
+                <td> <input class="form-control" asp-for="Adresse"> </td>
+            </tr>
+            <tr>
+                <td> <label asp-for="Ville"></label></td>
+                <td> <input class="form-control" asp-for="Ville"> </td>
+            </tr>
+            <tr>
+                <td> <label asp-for="Province"></label> </td>
+                <td> <input class="form-control" asp-for="Province"> </td>
+            </tr>
+            <tr>
+                <td> <label asp-for="Telephone"></label> </td>
+                <td> <input class="form-control" asp-for="Telephone"> </td>
+            </tr>
+            <tr><td><input type="submit" value="Ajouter"></td></tr>   
+        </tbody>
+         
+    </table>
+        
+    </form>
+}
+
