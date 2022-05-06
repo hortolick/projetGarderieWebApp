@@ -64,11 +64,11 @@ namespace projetGarderieWebApp.Controllers
         {
             string[] parsedInfos = infos.Split("&");
 
-            string Nom = parsedInfos[0];
-            string Prenom = parsedInfos[1];
+            string Prenom = parsedInfos[0];
+            string Nom = parsedInfos[1];
             string Date = parsedInfos[2];
 
-            EnfantDTO enfantDTO = new EnfantDTO(Prenom, Nom, Date);
+            EnfantDTO enfantDTO = new EnfantDTO(Nom, Prenom, Date);
 
             presence.Enfant = enfantDTO;
 

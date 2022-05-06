@@ -27,7 +27,7 @@ else
             <th>Téléphone</th>
             <th><input class="btn btn-danger" id="vidation" onclick="if(confirm('Voulez vous?')){this.form.action='/Enfant/ViderListeEnfant'; this.form.method='post';submit();}" type="button" value="Vider liste Enfants"></th>
         </tr>
-            <tr><td><input type="hidden" id="nomEnfant" name="nomEnfant"></td></tr>
+            <tr><td><input type="hidden" id="infos" name="infos"></td></tr>
             @foreach (EnfantDTO enfant in ViewBag.listeEnfants)
                 {<tr>
                     <td>@enfant.Prenom</td>
@@ -37,8 +37,8 @@ else
                     <td>@enfant.Ville</td>
                     <td>@enfant.Province</td>
                     <td class="pr-2">@enfant.Telephone</td>
-                    <td><input class="btn btn-primary" onclick="document.getElementById('nomEnfant').value = '@enfant.Nom'; this.form.action='/Enfant/FormModifier'; this.form.method='get'; submit();" type="button" value="Modifier">
-                        <input class="btn btn-primary" onclick="if(confirm('confirmation silvouple')){document.getElementById('nomEnfant').value = '@enfant.Nom'; this.form.action='/Enfant/SupprimerEnfant'; this.form.method='post'; submit();}" type="button" value="Supprimer"></td>
+                    <td><input class="btn btn-primary" onclick="document.getElementById('infos').value = '@enfant.Nom&@enfant.Prenom&@enfant.DateNaissance'; this.form.action='/Enfant/FormModifier'; this.form.method='get'; submit();" type="button" value="Modifier">
+                        <input class="btn btn-primary" onclick="if(confirm('confirmation silvouple')){document.getElementById('infos').value = '@enfant.Nom&@enfant.Prenom&@enfant.DateNaissance'; this.form.action='/Enfant/SupprimerEnfant'; this.form.method='post'; submit();}" type="button" value="Supprimer"></td>
                     
                 </tr>}
         </table>
@@ -61,31 +61,31 @@ else
             <tbody>
             <tr>
                 <td><label asp-for="Prenom"></label></td>
-                <td> <input asp-for="Prenom"> </td>
+                <td> <input class="form-control" asp-for="Prenom"> </td>
             </tr>
             <tr>
                 <td><label asp-for="Nom"></label></td>
-                <td> <input asp-for="Nom"> </td>
+                <td> <input class="form-control" asp-for="Nom"> </td>
             </tr>
             <tr>
-                <td> <label asp-for="DateNaissance"></label></td>
-                <td> <input asp-for="DateNaissance" type="date"> </td>
+                <td> <label asp-for="DateNaissance">Date de naissance</label></td>
+                <td> <input class="form-control" asp-for="DateNaissance" type="date"> </td>
             </tr>
             <tr>
                 <td> <label asp-for="Adresse"></label></td>
-                <td> <input asp-for="Adresse"> </td>
+                <td> <input class="form-control" asp-for="Adresse"> </td>
             </tr>
             <tr>
                 <td> <label asp-for="Ville"></label></td>
-                <td> <input asp-for="Ville"> </td>
+                <td> <input class="form-control" asp-for="Ville"> </td>
             </tr>
             <tr>
                 <td> <label asp-for="Province"></label> </td>
-                <td> <input asp-for="Province"> </td>
+                <td> <input class="form-control" asp-for="Province"> </td>
             </tr>
             <tr>
                 <td> <label asp-for="Telephone"></label> </td>
-                <td> <input asp-for="Telephone"> </td>
+                <td> <input class="form-control" asp-for="Telephone"> </td>
             </tr>
             <tr><td><input type="submit" value="Ajouter"></td></tr>   
         </tbody>

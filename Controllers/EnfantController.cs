@@ -52,21 +52,31 @@ namespace projetGarderieWebApp.Controllers
         /// <returns></returns>
         [Route("Enfant/FormModifier")]
         [HttpGet]
-        public async Task<IActionResult> FormModifier([FromQuery] string nomEnfant)
+        public async Task<IActionResult> FormModifier([FromQuery] string infos)
         {
             try
             {
+                string[] parsedInfos = infos.Split("&"); 
+
+                string Prenom = parsedInfos[1];
+                string Nom = parsedInfos[0];
+                string Date = parsedInfos[2];
+
+                EnfantDTO enfant = new EnfantDTO(Nom, Prenom, Date);
+
                 if (TempData["MessageErreur"] != null)
                     ViewBag.MessageErreur = TempData["MessageErreur"];
-                JsonValue jsonResponse = await WebAPI.Instance.ExecuteGetAsync("http://" + Program.HOST + ":" + Program.PORT + "/Enfant/ObtenirEnfant?nomEnfant=" + nomEnfant);
-                EnfantDTO garderie = JsonConvert.DeserializeObject<EnfantDTO>(jsonResponse.ToString());
-                return View(garderie);
+
+                JsonValue jsonResponse = await WebAPI.Instance.ExecuteGetAsync("http://" + Program.HOST + ":" + Program.PORT + "/Enfant/ObtenirEnfant?nomEnfant=" + enfant.Nom + "&prenomEnfant=" + enfant.Prenom + "&dateNaissance=" + enfant.DateNaissance);
+                EnfantDTO enfantBD = JsonConvert.DeserializeObject<EnfantDTO>(jsonResponse.ToString());
+
+                return View(enfantBD);
             }
             catch (Exception e)
             {
                 ViewBag.MessageErreur = e.Message;
             }
-            return RedirectToAction("Index");
+            return View();
         }
 
 
@@ -79,11 +89,11 @@ namespace projetGarderieWebApp.Controllers
         /// <returns></returns>
         [Route("Enfant/ModifierEnfant")]
         [HttpPost]
-        public async Task<IActionResult> ModifierEnfant([FromForm] EnfantDTO garderieDTO)
+        public async Task<IActionResult> ModifierEnfant([FromForm] EnfantDTO enfantDTO)
         {
             try
             {
-                await WebAPI.Instance.PostAsync("http://" + Program.HOST + ":" + Program.PORT + "/Enfant/ModifierEnfant", garderieDTO);
+                await WebAPI.Instance.PostAsync("http://" + Program.HOST + ":" + Program.PORT + "/Enfant/ModifierEnfant", enfantDTO);
             }
             catch (Exception e)
             {
@@ -94,11 +104,19 @@ namespace projetGarderieWebApp.Controllers
 
         [Route("Enfant/SupprimerEnfant")]
         [HttpPost]
-        public async Task<IActionResult> SupprimerEnfant([FromForm] string nomEnfant)
+        public async Task<IActionResult> SupprimerEnfant([FromForm] string infos)
         {
             try
             {
-                await WebAPI.Instance.PostAsync("http://" + Program.HOST + ":" + Program.PORT + "/Enfant/SupprimerEnfant?nomEnfant=" + nomEnfant, null);
+                string[] parsedInfos = infos.Split("&"); 
+
+                string Nom = parsedInfos[0];
+                string Prenom = parsedInfos[1];
+                string Date = parsedInfos[2];
+
+                EnfantDTO enfantDTO = new EnfantDTO(Nom, Prenom, Date);
+
+                await WebAPI.Instance.PostAsync("http://" + Program.HOST + ":" + Program.PORT + "/Enfant/SupprimerEnfant", enfantDTO);
             }
             catch (Exception e)
             {
