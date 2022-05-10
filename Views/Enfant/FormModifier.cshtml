@@ -33,13 +33,28 @@ else
             </tr>
             <tr>
                 <td> <label asp-for="Province"></label> </td>
-                <td> <input class="form-control" asp-for="Province"> </td>
+                <td><select name="province" asp-for="Province" class="form-control" id="province">
+                    <option value="Alberta">Alberta</option>
+                    <option value="Colombie Britannique">Colombie Britannique</option>
+                    <option value="Manitoba">Manitoba</option>
+                    <option value="Nouveau Brunswick">Nouveau Brunswick</option>
+                    <option value="Terre-Neuve et Labrador">Terre-Neuve et Labrador</option>
+                    <option value="Nouvelle-Écosse">Nouvelle-Écosse</option>
+                    <option value="Territoires du Nord-Ouest">Territoires du Nord-Ouest</option>
+                    <option value="Nunavut">Nunavut</option>
+                    <option value="Ontario">Ontario</option>
+                    <option value="Ile du Prince-Édouard">Ile du Prince-Édouard</option>
+                    <option value="Québec">Québec</option>
+                    <option value="Saskatchewan">Saskatchewan</option>
+                    <option value="Yukon">Yukon</option>
+                </select>
+                </td>
             </tr>
             <tr>
                 <td> <label asp-for="Telephone"></label> </td>
                 <td> <input class="form-control" asp-for="Telephone"> </td>
             </tr>
-            <tr><td><input type="submit" value="Ajouter"></td></tr>   
+            <tr><td><input type="submit" value="Modifier"></td></tr>   
         </tbody>
          
     </table>

@@ -41,6 +41,9 @@ namespace projetGarderieWebApp.Controllers
                 JsonValue listeEnfantsJson = await WebAPI.Instance.ExecuteGetAsync("http://" + Program.HOST + ":" + Program.PORT + "/Enfant/ObtenirListeEnfant");
                 ViewBag.listeEnfants = JsonConvert.DeserializeObject<List<EnfantDTO>>(listeEnfantsJson.ToString()).ToArray();
 
+                JsonValue listeEducateursJson = await WebAPI.Instance.ExecuteGetAsync("http://" + Program.HOST + ":" + Program.PORT + "/Educateur/ObtenirListeEducateur");
+                ViewBag.listeEducateurs = JsonConvert.DeserializeObject<List<EducateurDTO>>(listeEducateursJson.ToString()).ToArray();
+
                 JsonValue listePresencesJson = await WebAPI.Instance.ExecuteGetAsync("http://" + Program.HOST + ":" + Program.PORT + "/Presence/ObtenirListePresenceGarderie?nomGarderie=" + nomGarderie);
                 ViewBag.listePresences = JsonConvert.DeserializeObject<List<PresenceDTO>>(listePresencesJson.ToString()).ToArray();
                 ViewBag.nomGarderie = nomGarderie;
@@ -60,9 +63,10 @@ namespace projetGarderieWebApp.Controllers
         /// <returns></returns>
         [Route("Presence/AjouterPresence")]
         [HttpPost]
-        public async Task<IActionResult> AjouterPresence([FromForm] string infos, [FromForm] string infosEducateur, [FromForm] PresenceDTO presence)
+        public async Task<IActionResult> AjouterPresence([FromForm] string infosEnfant, [FromForm] string infosEducateur, [FromForm] PresenceDTO presence)
         {
-            string[] parsedInfos = infos.Split("&");
+            //Parsage de l'info du value du form afin de separer les valeurs comme il faut
+            string[] parsedInfos = infosEnfant.Split("&");
 
             string Prenom = parsedInfos[0];
             string Nom = parsedInfos[1];
@@ -72,13 +76,12 @@ namespace projetGarderieWebApp.Controllers
 
             presence.Enfant = enfantDTO;
 
+
             string[] parsedInfosEducateur = infosEducateur.Split("&");
 
-
-            EducateurDTO educateurDTO = new EducateurDTO(parsedInfos[1], parsedInfos[0], parsedInfos[2]);
+            EducateurDTO educateurDTO = new EducateurDTO(parsedInfosEducateur[1], parsedInfosEducateur[0], parsedInfosEducateur[2]);
 
             presence.Educateur = educateurDTO;
-
 
             try
             {
