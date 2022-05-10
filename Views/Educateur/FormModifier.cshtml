@@ -1,5 +1,5 @@
 ﻿@using projetGarderieWebApp.Models
-@model GarderieDTO;
+@model EducateurDTO;
 @*Si erreur du côté serveur... affichage du message d'erreur...*@
 @if (ViewBag.MessageErreur != null)
 {
@@ -8,15 +8,24 @@
 }
 else
 {
-    <form asp-controller="Garderie" asp-action="ModifierGarderie" method="post">
+    <form asp-controller="Educateur" asp-action="ModifierEducateur" method="post">
         <table>
-            <tbody><tr>
+            <tbody>
+            <tr>
+                <td><label asp-for="Prenom"></label></td>
+                <td> <input class="form-control" asp-for="Prenom" readonly> </td>
+            </tr>
+            <tr>
                 <td><label asp-for="Nom"></label></td>
                 <td> <input class="form-control" asp-for="Nom" readonly> </td>
             </tr>
             <tr>
+                <td> <label asp-for="DateNaissance"></label></td>
+                <td> <input class="form-control" asp-for="DateNaissance" readonly> </td>
+            </tr>
+            <tr>
                 <td> <label asp-for="Adresse"></label></td>
-                <td>  <input class="form-control" asp-for="Adresse"> </td>
+                <td> <input class="form-control" asp-for="Adresse"> </td>
             </tr>
             <tr>
                 <td> <label asp-for="Ville"></label></td>
@@ -42,12 +51,13 @@ else
                 </td>
             </tr>
             <tr>
-                <td>  <label asp-for="Telephone"></label> </td>
-                <td>  <input class="form-control" asp-for="Telephone"> </td>
+                <td> <label asp-for="Telephone"></label> </td>
+                <td> <input class="form-control" asp-for="Telephone"> </td>
             </tr>
-        </tbody></table>
-        <input type="submit" value="Modifier">
-        <input type="button" value="Annuler" onclick="history.back();" />
+            <tr><td><input type="submit" value="Ajouter"></td></tr>   
+        </tbody>
+         
+    </table>
         
     </form>
 }

@@ -9,7 +9,7 @@
 }
 else
 {
-    <h1>Sélectionner un enfant : </h1>
+    <h1>Sélectionner une garderie : </h1>
     <form method="get" action="">
         <select name="nomGarderie" onchange="this.form.submit()" id="garderie">
             @foreach (GarderieDTO garderie in ViewBag.listeGarderies)
@@ -33,21 +33,19 @@ else
     <form asp-area="" asp-controller="Presence" asp-action="ViderListePresence" method="post">
         <table>
         <tr>
-            <th>Prenom</th>
-            <th>Nom</th>
             <th>Enfant</th>
+            <th>Éducateur</th>
+            <th>Date</th>
             @*<th><input id="vidation" onclick="if(confirm('Voulez vous?')){this.form.action='/Presence/ViderListePresence'; this.form.method='post';submit();}" type="button" value="Vider liste Presences"></th>*@
         </tr>
             <tr><td><input type="hidden" id="nomPresence" name="nomPresence"></td></tr>
             @foreach (PresenceDTO presence in ViewBag.listePresences)
                 {<form>
                     <tr>
-                    <td>@presence.Enfant.Prenom</td>
-                    <td>@presence.Enfant.Nom</td>
+                    <td>@presence.Enfant.Prenom @presence.Enfant.Nom</td>
+                    <td>@presence.Educateur.Prenom @presence.Educateur.Nom</td>
                     <td>@presence.Date</td>
                     <input type="hidden" name="nomGarderie" value="@presence.NomGarderie">
-                    <td><input class="btn btn-primary" onclick="document.getElementById('nomPresence').value = '@presence'; this.form.action='/Presence/FormModifierPresence'; this.form.method='get'; submit();" type="button" value="Modifier"></td>
-                    <td><input class="btn btn-primary" onclick="if(confirm('Veux tu')){this.form.action='/Presence/SupprimerPresence'; this.form.method='post'; submit();}" type="button" value="Supprimer">
                 </tr></form>}
         </table>
         
@@ -66,7 +64,7 @@ else
 
     <form asp-controller="Presence" asp-action="AjouterPresence" method="post">
         <label>Enfant</label>
-        <select name="infos">
+        <select class="form-control w-25" name="infosEnfant">
             @foreach (EnfantDTO enfant in ViewBag.listeEnfants)
             {
                 {
@@ -74,11 +72,21 @@ else
                 }
             }
         </select>
+        <label>Éducateur</label>
+        <select class="form-control w-25" name="infosEducateur">
+            @foreach (EducateurDTO educateur in ViewBag.listeEducateurs)
+            {
+                {
+                    <option value="@educateur.Prenom&@educateur.Nom&@educateur.DateNaissance">@educateur.Prenom @educateur.Nom</option>
+                }
+            }
+        </select>
+        <br>
         <table>
             <tbody>
             <tr>
                 <td> <label asp-for="Date"></label></td>
-                <td> <input asp-for="Date" type="date" required> </td>
+                <td> <input class="form-control" asp-for="Date" type="date" required> </td>
             </tr>
                 <input type="hidden" name="nomGarderie" value="@ViewBag.nomGarderie">
             <tr><td><input class="btn btn-primary" type="submit" value="Ajouter"></td></tr>   

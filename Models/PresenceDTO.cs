@@ -1,4 +1,5 @@
-﻿namespace projetGarderieWebApp.Models
+﻿
+namespace projetGarderieWebApp.Models
 {
     public class PresenceDTO
     {
@@ -26,20 +27,26 @@
             get { return enfant; }
             set { enfant = value; }
         }
+
+        private EducateurDTO educateur;
+
+        public EducateurDTO Educateur
+        {
+            get { return educateur; }
+            set { educateur = value; }
+        }
         #endregion
 
         #region Constructeurs
-
-        public PresenceDTO(string date="", string nomGarderie="", EnfantDTO enfant=null)
+        public PresenceDTO() { }
+        public PresenceDTO(string date = "", string nomGarderie = "", EnfantDTO enfant = null, EducateurDTO educateur = null)
         {
             Date = date;
             NomGarderie = nomGarderie;
             Enfant = enfant;
+            Educateur = educateur;
         }
 
-        public PresenceDTO() { }
-            
-        
         #endregion
     }
 }

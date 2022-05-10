@@ -9,38 +9,38 @@ using System.Threading.Tasks;
 
 namespace projetGarderieWebApp.Controllers
 {
-    public class EnfantController : Controller
+    public class EducateurController : Controller
     {
         /// <summary>
         /// page principale
         /// </summary>
         /// <returns></returns>
-        [Route("Enfant")]
-        [Route("Enfant/Index")]
+        [Route("Educateur")]
+        [Route("Educateur/Index")]
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            JsonValue listeEnfantsJson = await WebAPI.Instance.ExecuteGetAsync("http://" + Program.HOST + ":" + Program.PORT + "/Enfant/ObtenirListeEnfant");
-            ViewBag.listeEnfants =JsonConvert.DeserializeObject<List<EnfantDTO>>(listeEnfantsJson.ToString()).ToArray();
+            JsonValue listeEducateursJson = await WebAPI.Instance.ExecuteGetAsync("http://" + Program.HOST + ":" + Program.PORT + "/Educateur/ObtenirListeEducateur");
+            ViewBag.listeEducateurs =JsonConvert.DeserializeObject<List<EducateurDTO>>(listeEducateursJson.ToString()).ToArray();
             return View();
         }
 
         /// <summary>
         /// 
         /// </summary>
-        [Route("Enfant/AjouterEnfant")]
+        [Route("Educateur/AjouterEducateur")]
         [HttpPost]
-        public async Task<IActionResult> AjouterEnfant([FromForm] EnfantDTO garderieDTO)
+        public async Task<IActionResult> AjouterEducateur([FromForm] EducateurDTO garderieDTO)
         {
             try
             {
-                await WebAPI.Instance.PostAsync("http://" + Program.HOST + ":" + Program.PORT + "/Enfant/AjouterEnfant", garderieDTO);
+                await WebAPI.Instance.PostAsync("http://" + Program.HOST + ":" + Program.PORT + "/Educateur/AjouterEducateur", garderieDTO);
             }
             catch (Exception e)
             {
                 ViewBag.MessageErreur = e.Message;
             }
-            return RedirectToAction("Index", "Enfant");
+            return RedirectToAction("Index", "Educateur");
         }
 
         /// <summary>
@@ -48,9 +48,9 @@ namespace projetGarderieWebApp.Controllers
         /// Rôles de l'action : 
         ///  -Lancer le formulaire Modifier
         /// </summary>
-        /// <param name="nomEnfant">le nom de la Enfant a modifier</param>
+        /// <param name="nomEducateur">le nom de la Educateur a modifier</param>
         /// <returns></returns>
-        [Route("Enfant/FormModifier")]
+        [Route("Educateur/FormModifier")]
         [HttpGet]
         public async Task<IActionResult> FormModifier([FromQuery] string infos)
         {
@@ -62,15 +62,15 @@ namespace projetGarderieWebApp.Controllers
                 string Nom = parsedInfos[0];
                 string Date = parsedInfos[2];
 
-                EnfantDTO enfant = new EnfantDTO(Nom, Prenom, Date);
+                EducateurDTO educateur = new EducateurDTO(Nom, Prenom, Date);
 
                 if (TempData["MessageErreur"] != null)
                     ViewBag.MessageErreur = TempData["MessageErreur"];
 
-                JsonValue jsonResponse = await WebAPI.Instance.ExecuteGetAsync("http://" + Program.HOST + ":" + Program.PORT + "/Enfant/ObtenirEnfant?nomEnfant=" + enfant.Nom + "&prenomEnfant=" + enfant.Prenom + "&dateNaissance=" + enfant.DateNaissance);
-                EnfantDTO enfantBD = JsonConvert.DeserializeObject<EnfantDTO>(jsonResponse.ToString());
+                JsonValue jsonResponse = await WebAPI.Instance.ExecuteGetAsync("http://" + Program.HOST + ":" + Program.PORT + "/Educateur/ObtenirEducateur?nomEducateur=" + educateur.Nom + "&prenomEducateur=" + educateur.Prenom + "&dateNaissance=" + educateur.DateNaissance);
+                EducateurDTO educateurBD = JsonConvert.DeserializeObject<EducateurDTO>(jsonResponse.ToString());
 
-                return View(enfantBD);
+                return View(educateurBD);
             }
             catch (Exception e)
             {
@@ -83,17 +83,17 @@ namespace projetGarderieWebApp.Controllers
         /// <summary>
         /// Méthode de service appelé lors de l'action modifier.
         /// Rôles de l'action : 
-        ///  -Modifier un Enfant
+        ///  -Modifier un Educateur
         /// </summary>
-        /// <param name="garderie">la Enfant a modifier</param>
+        /// <param name="garderie">la Educateur a modifier</param>
         /// <returns></returns>
-        [Route("Enfant/ModifierEnfant")]
+        [Route("Educateur/ModifierEducateur")]
         [HttpPost]
-        public async Task<IActionResult> ModifierEnfant([FromForm] EnfantDTO enfantDTO)
+        public async Task<IActionResult> ModifierEducateur([FromForm] EducateurDTO educateurDTO)
         {
             try
             {
-                await WebAPI.Instance.PostAsync("http://" + Program.HOST + ":" + Program.PORT + "/Enfant/ModifierEnfant", enfantDTO);
+                await WebAPI.Instance.PostAsync("http://" + Program.HOST + ":" + Program.PORT + "/Educateur/ModifierEducateur", educateurDTO);
             }
             catch (Exception e)
             {
@@ -102,9 +102,9 @@ namespace projetGarderieWebApp.Controllers
             return RedirectToAction("Index");
         }
 
-        [Route("Enfant/SupprimerEnfant")]
+        [Route("Educateur/SupprimerEducateur")]
         [HttpPost]
-        public async Task<IActionResult> SupprimerEnfant([FromForm] string infos)
+        public async Task<IActionResult> SupprimerEducateur([FromForm] string infos)
         {
             try
             {
@@ -114,30 +114,30 @@ namespace projetGarderieWebApp.Controllers
                 string Prenom = parsedInfos[1];
                 string Date = parsedInfos[2];
 
-                EnfantDTO enfantDTO = new EnfantDTO(Nom, Prenom, Date);
+                EducateurDTO educateurDTO = new EducateurDTO(Nom, Prenom, Date);
 
-                await WebAPI.Instance.PostAsync("http://" + Program.HOST + ":" + Program.PORT + "/Enfant/SupprimerEnfant", enfantDTO);
+                await WebAPI.Instance.PostAsync("http://" + Program.HOST + ":" + Program.PORT + "/Educateur/SupprimerEducateur", educateurDTO);
             }
             catch (Exception e)
             {
                 ViewBag.MessageErreur = e.Message;
             }
-            return RedirectToAction("Index", "Enfant");
+            return RedirectToAction("Index", "Educateur");
         }
 
-        [Route("Enfant/ViderListeEnfant")]
+        [Route("Educateur/ViderListeEducateur")]
         [HttpPost]
-        public async Task<IActionResult> ViderListeEnfant()
+        public async Task<IActionResult> ViderListeEducateur()
         {
             try
             {
-                await WebAPI.Instance.PostAsync("http://" + Program.HOST + ":" + Program.PORT + "/Enfant/ViderListeEnfant", null);
+                await WebAPI.Instance.PostAsync("http://" + Program.HOST + ":" + Program.PORT + "/Educateur/ViderListeEducateur", null);
             }
             catch (Exception e)
             {
                 ViewBag.MessageErreur = e.Message;
             }
-            return RedirectToAction("Index", "Enfant");
+            return RedirectToAction("Index", "Educateur");
         }
     }
 }
