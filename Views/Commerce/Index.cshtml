@@ -29,8 +29,8 @@ else
                     <td>@commerce.Description</td>
                     <td>@commerce.Adresse</td>
                     <td class="pr-2">@commerce.Telephone</td>
-                    <td><input class="btn btn-primary" onclick="document.getElementById('descriptionCommerce').value = '@commerce.Description'; this.form.action='/Commerce/FormModifier'; this.form.method='get'; submit();" type="button" value="Modifier">
-                        <input class="btn btn-primary" onclick="if(confirm('confirmation silvouple')){document.getElementById('descriptionCommerce').value = '@commerce.Description'; this.form.action='/Commerce/SupprimerCommerce'; this.form.method='post'; submit();}" type="button" value="Supprimer"></td>
+                    <td><input class="btn btn-primary p-1" onclick="document.getElementById('descriptionCommerce').value = '@commerce.Description'; this.form.action='/Commerce/FormModifier'; this.form.method='get'; submit();" type="button" value="Modifier">
+                        <input class="btn btn-primary p-1" onclick="if(confirm('confirmation silvouple')){document.getElementById('descriptionCommerce').value = '@commerce.Description'; this.form.action='/Commerce/SupprimerCommerce'; this.form.method='post'; submit();}" type="button" value="Supprimer"></td>
                     
                 </tr>}
         </table>

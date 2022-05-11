@@ -37,8 +37,8 @@ else
                     <td>@enfant.Ville</td>
                     <td>@enfant.Province</td>
                     <td class="pr-2">@enfant.Telephone</td>
-                    <td><input class="btn btn-primary" onclick="document.getElementById('infos').value = '@enfant.Nom&@enfant.Prenom&@enfant.DateNaissance'; this.form.action='/Enfant/FormModifier'; this.form.method='get'; submit();" type="button" value="Modifier">
-                        <input class="btn btn-primary" onclick="if(confirm('confirmation silvouple')){document.getElementById('infos').value = '@enfant.Nom&@enfant.Prenom&@enfant.DateNaissance'; this.form.action='/Enfant/SupprimerEnfant'; this.form.method='post'; submit();}" type="button" value="Supprimer"></td>
+                    <td><input class="btn btn-primary p-1" onclick="document.getElementById('infos').value = '@enfant.Nom&@enfant.Prenom&@enfant.DateNaissance'; this.form.action='/Enfant/FormModifier'; this.form.method='get'; submit();" type="button" value="Modifier">
+                        <input class="btn btn-primary p-1" onclick="if(confirm('confirmation silvouple')){document.getElementById('infos').value = '@enfant.Nom&@enfant.Prenom&@enfant.DateNaissance'; this.form.action='/Enfant/SupprimerEnfant'; this.form.method='post'; submit();}" type="button" value="Supprimer"></td>
                     
                 </tr>}
         </table>

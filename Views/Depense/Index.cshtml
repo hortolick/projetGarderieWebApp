@@ -12,7 +12,7 @@ else
 {
     <h1>Sélectionner une garderie : </h1>
     <form method="get" action="">
-        <select name="nomGarderie" onchange="this.form.submit()" id="garderie">
+        <select class="form-control w-25" name="nomGarderie" onchange="this.form.submit()" id="garderie">
             @foreach (GarderieDTO garderie in ViewBag.listeGarderies)
             {
                 @if(@garderie.Nom.Equals(ViewBag.nomGarderie))
@@ -52,8 +52,8 @@ else
                     <td>@depense.Commerce.Description</td>
                     <input type="hidden" name="nomGarderie" value="@ViewBag.nomGarderie">
                     <input type="hidden" id="DateTemps" value="@depense.DateTemps" name="DateTemps">
-                    <td><input class="btn btn-primary" onclick="document.getElementById('nomDepense').value = '@depense'; this.form.action='/Depense/FormModifierDepense'; this.form.method='get'; submit();" type="button" value="Modifier"></td>
-                    <td><input class="btn btn-primary" onclick="if(confirm('Veux tu')){this.form.action='/Depense/SupprimerDepense'; this.form.method='post'; submit();}" type="button" value="Supprimer">
+                    <td><input class="btn btn-primary p-1" onclick="document.getElementById('nomDepense').value = '@depense'; this.form.action='/Depense/FormModifierDepense'; this.form.method='get'; submit();" type="button" value="Modifier"></td>
+                    <td><input class="btn btn-primary p-1" onclick="if(confirm('Veux tu')){this.form.action='/Depense/SupprimerDepense'; this.form.method='post'; submit();}" type="button" value="Supprimer">
                 </tr></form>}
         </table>
         
@@ -73,25 +73,49 @@ else
     <form asp-controller="Depense" asp-action="AjouterDepense" method="post">
         <label>Catégorie de la dépense</label>
         <br>
-        <select class="form-control" asp-for="CategorieDepense.Description" >
-            @foreach (CategorieDepenseDTO categorie in ViewBag.listeCategorieDepenses)
-            {
-                {
-                    <option value=@categorie.Description action="departement" selected>@categorie.Description</option>
-                }
-            }
-        </select>
+        @if(ViewBag.listeCategorieDepenses.Length>6)
+        {
+		<select class="form-control w-25" asp-for="CategorieDepense.Description" >
+				@foreach (CategorieDepenseDTO categorie in ViewBag.listeCategorieDepenses)
+				{
+					{
+						<option value=@categorie.Description action="departement" selected>@categorie.Description</option>
+					}
+				}
+			</select>
+        }
+        else{
+				@foreach (CategorieDepenseDTO categorie in ViewBag.listeCategorieDepenses)
+				{
+					{
+                        <input type="radio" name="CategorieDepense.Description" value="@categorie.Description">
+                        <label>@categorie.Description</label><br />
+					}
+				}
+        }
         <br>
         <label>Commerce de la dépense</label>
         <br>
-        <select class="form-control" asp-for="Commerce.Description">
-            @foreach (CommerceDTO commerce in ViewBag.listeCommerces)
-            {
-                {
-                    <option value=@commerce.Description action="departement" selected>@commerce.Description</option>
-                }
-            }
-        </select>
+        @if(ViewBag.listeCommerces.Length>6)
+        {
+		<select class="form-control w-25" asp-for="Commerce.Description" >
+				@foreach (CommerceDTO commerce in ViewBag.listeCommerces)
+				{
+					{
+						<option value=@commerce.Description  selected>@commerce.Description</option>
+					}
+				}
+			</select>
+        }
+        else{
+				@foreach (CommerceDTO commerce in ViewBag.listeCommerces)
+				{
+					{
+                        <input type="radio" name="Commerce.Description" value="@commerce.Description">
+                        <label>@commerce.Description</label><br />
+					}
+				}
+        }
         <table>
             <tbody>
             <tr>

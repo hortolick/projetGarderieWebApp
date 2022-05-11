@@ -27,8 +27,8 @@ else
                 {<tr>
                     <td>@categorieDepense.Description</td>
                     <td class="pr-2">@categorieDepense.Pourcentage</td>
-                    <td><input class="btn btn-primary" onclick="document.getElementById('descriptionCategorie').value = '@categorieDepense.Description'; this.form.action='/CategorieDepense/FormModifier'; this.form.method='get'; submit();" type="button" value="Modifier">
-                        <input class="btn btn-primary" onclick="if(confirm('confirmation silvouple')){document.getElementById('descriptionCategorie').value = '@categorieDepense.Description'; this.form.action='/CategorieDepense/SupprimerCategorieDepense'; this.form.method='post'; submit();}" type="button" value="Supprimer"></td>
+                    <td><input class="btn btn-primary p-1" onclick="document.getElementById('descriptionCategorie').value = '@categorieDepense.Description'; this.form.action='/CategorieDepense/FormModifier'; this.form.method='get'; submit();" type="button" value="Modifier">
+                        <input class="btn btn-primary p-1" onclick="if(confirm('confirmation silvouple')){document.getElementById('descriptionCategorie').value = '@categorieDepense.Description'; this.form.action='/CategorieDepense/SupprimerCategorieDepense'; this.form.method='post'; submit();}" type="button" value="Supprimer"></td>
                     
                 </tr>}
         </table>
