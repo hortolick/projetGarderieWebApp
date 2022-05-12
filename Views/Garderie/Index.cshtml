@@ -20,7 +20,7 @@ else
              <th>Ville</th>
              <th class="pr-2">Province</th>
              <th>Téléphone</th>
-             <th><input class="btn btn-danger" id="vidation" onclick="if(confirm('Voulez vous?')){this.form.action='/Garderie/ViderListeGarderie'; this.form.method='post';submit();}" type="button" value="Vider liste Garderies"></th>
+             <th><input class="btn btn-danger" id="vidation" onclick="if(confirm('Voulez vous vider la liste?')){this.form.action='/Garderie/ViderListeGarderie'; this.form.method='post';submit();}" type="button" value="Vider liste Garderies"></th>
           </tr>
           <tr>
              <td><input type="hidden" id="nomGarderie" name="nomGarderie"></td>
@@ -33,8 +33,8 @@ else
              <td>@garderie.Ville</td>
              <td>@garderie.Province</td>
              <td class="pr-2">@garderie.Telephone</td>
-             <td><input class="btn btn-primary p-1" onclick="document.getElementById('nomGarderie').value = '@garderie.Nom'; this.form.action='/Garderie/FormModifier'; this.form.method='get'; submit();" type="button" value="Modifier">
-                <input class="btn btn-primary p-1" onclick="if(confirm('confirmation silvouple')){document.getElementById('nomGarderie').value = '@garderie.Nom'; this.form.action='/Garderie/SupprimerGarderie'; this.form.method='post'; submit();}" type="button" value="Supprimer">
+             <td><input class="btn btn-dark p-1" onclick="document.getElementById('nomGarderie').value = '@garderie.Nom'; this.form.action='/Garderie/FormModifier'; this.form.method='get'; submit();" type="button" value="Modifier">
+                <input class="btn btn-warning p-1" onclick="if(confirm('Voulez-vous vraiment supprimer?')){document.getElementById('nomGarderie').value = '@garderie.Nom'; this.form.action='/Garderie/SupprimerGarderie'; this.form.method='post'; submit();}" type="button" value="Supprimer">
              </td>
           </tr>
           }
