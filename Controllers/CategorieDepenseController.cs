@@ -26,7 +26,7 @@ namespace projetGarderieWebApp.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Ajouter une categorie
         /// </summary>
         [Route("CategorieDepense/AjouterCategorieDepense")]
         [HttpPost]

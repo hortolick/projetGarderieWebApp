@@ -11,6 +11,12 @@ namespace projetGarderieWebApp.Controllers
 {
     public class FinanceController : Controller
     {
+        /// <summary>
+        /// Get the list of all the finances
+        /// </summary>
+        /// <param name="annee">L'annee des finances</param>
+        /// <param name="nomGarderie">Le nom de la garderie</param>
+        /// <returns></returns>
         [Route("Finance")]
         [Route("Finance/Index")]
         [HttpGet]
