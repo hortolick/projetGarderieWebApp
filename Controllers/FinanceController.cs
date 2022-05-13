@@ -32,7 +32,14 @@ namespace projetGarderieWebApp.Controllers
                 ViewBag.nomGarderie = nomGarderie;
                 ViewBag.annee = annee;
 
-                //JsonValue listeFinanceJson = await WebAPI.Instance.ExecuteGetAsync("http://" + Program.HOST + ":" + Program.PORT + "/Finance/ObtenirFinance?annee=" + annee + "&nomGarderie=" + nomGarderie);
+
+                JsonValue listeFinanceJson = await WebAPI.Instance.ExecuteGetAsync("http://" + Program.HOST + ":" + Program.PORT + "/Finance/ObtenirFinances?nomGarderie=" + nomGarderie + "&annee=" + annee);
+                FinanceDTO finance = JsonConvert.DeserializeObject<FinanceDTO>(listeFinanceJson.ToString());
+
+                ViewBag.Depense = finance.depense;
+                ViewBag.Revenus = finance.revenu;
+                ViewBag.Profit = finance.profit;
+
                 return View();
                 
             }
