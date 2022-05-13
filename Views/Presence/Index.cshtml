@@ -11,7 +11,7 @@ else
 {
     <h1>Sélectionner une garderie : </h1>
     <form method="get" action="">
-        <select name="nomGarderie" onchange="this.form.submit()" id="garderie">
+        <select class="form-control w-25" name="nomGarderie" onchange="this.form.submit()" id="garderie">
             @foreach (GarderieDTO garderie in ViewBag.listeGarderies)
             {
                 @if(@garderie.Nom.Equals(ViewBag.nomGarderie))
@@ -45,7 +45,6 @@ else
                     <td>@presence.Enfant.Prenom @presence.Enfant.Nom</td>
                     <td>@presence.Educateur.Prenom @presence.Educateur.Nom</td>
                     <td>@presence.Date</td>
-                    <input type="hidden" name="nomGarderie" value="@presence.NomGarderie">
                 </tr></form>}
         </table>
         
@@ -64,7 +63,28 @@ else
 
     <form asp-controller="Presence" asp-action="AjouterPresence" method="post">
         <label>Enfant</label>
-        <select class="form-control w-25" name="infosEnfant">
+        @if(ViewBag.listeEnfants.Length > 6)
+        {
+		<select class="form-control w-25" name="infosEnfant" >
+				@foreach (EnfantDTO enfant in ViewBag.listeEnfants)
+				{
+					{
+						<option value="@enfant.Prenom&@enfant.Nom&@enfant.DateNaissance" >@enfant.Prenom @enfant.Nom</option>
+					}
+				}
+			</select>
+        }
+        else{
+            <br />
+				@foreach (EnfantDTO enfant in ViewBag.listeEnfants)
+				{
+					{
+                        <input type="radio" name="infosEnfant" value="@enfant.Prenom&@enfant.Nom&@enfant.DateNaissance">
+                        <label>@enfant.Prenom @enfant.Nom</label><br />
+					}
+				}
+        }
+@*        <select class="form-control w-25" name="infosEnfant">
             @foreach (EnfantDTO enfant in ViewBag.listeEnfants)
             {
                 {
@@ -72,8 +92,29 @@ else
                 }
             }
         </select>
-        <label>Éducateur</label>
-        <select class="form-control w-25" name="infosEducateur">
+*@        <label>Éducateur</label>
+        @if(ViewBag.listeEducateurs.Length > 6)
+        {
+		<select class="form-control w-25" name="infosEducateur" >
+				@foreach (EducateurDTO educateur in ViewBag.listeEducateurs)
+				{
+					{
+						<option value="@educateur.Prenom&@educateur.Nom&@educateur.DateNaissance" >@educateur.Prenom @educateur.Nom</option>
+					}
+				}
+			</select>
+        }
+        else{
+            <br />
+				@foreach (EducateurDTO educateur in ViewBag.listeEducateurs)
+				{
+					{
+                        <input type="radio" name="infosEducateur" value="@educateur.Prenom&@educateur.Nom&@educateur.DateNaissance">
+                        <label>@educateur.Prenom @educateur.Nom</label><br />
+					}
+				}
+        }
+@*        <select class="form-control w-25" name="infosEducateur">
             @foreach (EducateurDTO educateur in ViewBag.listeEducateurs)
             {
                 {
@@ -81,7 +122,7 @@ else
                 }
             }
         </select>
-        <br>
+*@        <br>
         <table>
             <tbody>
             <tr>

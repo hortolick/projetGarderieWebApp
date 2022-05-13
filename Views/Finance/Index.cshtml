@@ -1,0 +1,60 @@
+﻿
+@using projetGarderieWebApp.Models
+@using System.Globalization
+@model FinanceDTO;
+
+@*Si erreur du côté serveur... affichage du message d'erreur...*@
+@if (ViewBag.MessageErreur != null)
+{
+    <br>
+    <h2 class="alert-danger">@ViewBag.MessageErreur</h2>
+}
+else
+{
+    <form method="get" action="">
+
+    </form>
+    <h1>Sélectionner une garderie : </h1>
+    <form method="get" action="">
+        <select class="form-control w-25" name="nomGarderie" onchange="this.form.submit()" id="garderie">
+            @foreach (GarderieDTO garderie in ViewBag.listeGarderies)
+            {
+                @if(@garderie.Nom.Equals(ViewBag.nomGarderie))
+                {
+                    <option value=@garderie.Nom action="garderie" selected>@garderie.Nom</option>
+                }
+                else
+                {
+                    <option value=@garderie.Nom action="garderie">@garderie.Nom</option>
+                }
+            }
+        </select>
+    <h1>Sélectionner une année</h1>
+        <select class="form-control w-25" name="annee" onchange="this.form.submit()" id="garderie">
+            @for(int year=2018; year<=DateTime.Now.Year; year++)
+            {
+                @if (year == ViewBag.annee)
+                {
+                    <option value=@year action="" selected>@year</option>
+                }
+                else
+                {
+                    <option value=@year action="">@year</option>
+                }
+
+              
+            }
+            </select>
+    </form>
+    <h3>Dépenses : @ViewBag.Depense.ToString("C2", CultureInfo.CreateSpecificCulture("fr-CA"))</h3>
+    <h3>Revenus : @ViewBag.Revenus.ToString("C2", CultureInfo.CreateSpecificCulture("fr-CA"))</h3>
+    @if (ViewBag.Profit < 0)
+    {
+        <h3 class="text-danger">Profit : @ViewBag.Profit.ToString("C2", CultureInfo.CreateSpecificCulture("fr-CA"))</h3>
+    }
+    else
+    {
+        <h3>Profit : @ViewBag.Profit.ToString("C2", CultureInfo.CreateSpecificCulture("fr-CA"))</h3>
+    }
+
+}

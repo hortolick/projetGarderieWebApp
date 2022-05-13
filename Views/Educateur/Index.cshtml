@@ -12,7 +12,7 @@ else
 
     @*Affichage de la liste des educateurs...*@
     <br>
-    <h3>Liste des Educateur(s) (@ViewBag.listeEducateurs.Length Educateur(s)) :</h3>
+    <h3>Liste des éducateur(s) (@ViewBag.listeEducateurs.Length éducateur(s)) :</h3>
     <br>
     
     <form asp-area="" asp-controller="Educateur" asp-action="ViderListeEducateur" method="post">
@@ -25,7 +25,7 @@ else
             <th>Ville</th>
             <th class="pr-2">Province</th>
             <th>Téléphone</th>
-            <th><input class="btn btn-danger" id="vidation" onclick="if(confirm('Voulez vous?')){this.form.action='/Educateur/ViderListeEducateur'; this.form.method='post';submit();}" type="button" value="Vider liste Educateurs"></th>
+            <th><input class="w-100 btn btn-danger" id="vidation" onclick="if(confirm('Voulez vous videz la liste?')){this.form.action='/Educateur/ViderListeEducateur'; this.form.method='post';submit();}" type="button" value="Vider liste Educateurs"></th>
         </tr>
             <tr><td><input type="hidden" id="infos" name="infos"></td></tr>
             @foreach (EducateurDTO educateur in ViewBag.listeEducateurs)
@@ -37,8 +37,8 @@ else
                     <td>@educateur.Ville</td>
                     <td>@educateur.Province</td>
                     <td class="pr-2">@educateur.Telephone</td>
-                    <td><input class="btn btn-primary" onclick="document.getElementById('infos').value = '@educateur.Nom&@educateur.Prenom&@educateur.DateNaissance'; this.form.action='/Educateur/FormModifier'; this.form.method='get'; submit();" type="button" value="Modifier">
-                        <input class="btn btn-primary" onclick="if(confirm('confirmation silvouple')){document.getElementById('infos').value = '@educateur.Nom&@educateur.Prenom&@educateur.DateNaissance'; this.form.action='/Educateur/SupprimerEducateur'; this.form.method='post'; submit();}" type="button" value="Supprimer"></td>
+                    <td class="input-block-level"><input class="btn btn-dark" onclick="document.getElementById('infos').value = '@educateur.Nom&@educateur.Prenom&@educateur.DateNaissance'; this.form.action='/Educateur/FormModifier'; this.form.method='get'; submit();" type="button" value="Modifier">
+                        <input class="btn btn-warning" onclick="if(confirm('Voulez-vous confirmer oui ou non?')){document.getElementById('infos').value = '@educateur.Nom&@educateur.Prenom&@educateur.DateNaissance'; this.form.action='/Educateur/SupprimerEducateur'; this.form.method='post'; submit();}" type="button" value="Supprimer"></td>
                     
                 </tr>}
         </table>

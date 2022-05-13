@@ -25,7 +25,7 @@ else
             <th>Ville</th>
             <th class="pr-2">Province</th>
             <th>Téléphone</th>
-            <th><input class="btn btn-danger" id="vidation" onclick="if(confirm('Voulez vous?')){this.form.action='/Enfant/ViderListeEnfant'; this.form.method='post';submit();}" type="button" value="Vider liste Enfants"></th>
+            <th><input class="btn btn-danger w-100" id="vidation" onclick="if(confirm('Voulez-vous vider la liste? (Attetion: dangereux)')){this.form.action='/Enfant/ViderListeEnfant'; this.form.method='post';submit();}" type="button" value="Vider liste Enfants"></th>
         </tr>
             <tr><td><input type="hidden" id="infos" name="infos"></td></tr>
             @foreach (EnfantDTO enfant in ViewBag.listeEnfants)
@@ -37,8 +37,8 @@ else
                     <td>@enfant.Ville</td>
                     <td>@enfant.Province</td>
                     <td class="pr-2">@enfant.Telephone</td>
-                    <td><input class="btn btn-primary" onclick="document.getElementById('infos').value = '@enfant.Nom&@enfant.Prenom&@enfant.DateNaissance'; this.form.action='/Enfant/FormModifier'; this.form.method='get'; submit();" type="button" value="Modifier">
-                        <input class="btn btn-primary" onclick="if(confirm('confirmation silvouple')){document.getElementById('infos').value = '@enfant.Nom&@enfant.Prenom&@enfant.DateNaissance'; this.form.action='/Enfant/SupprimerEnfant'; this.form.method='post'; submit();}" type="button" value="Supprimer"></td>
+                    <td class="colspan"><input class="btn btn-dark p-1" onclick="document.getElementById('infos').value = '@enfant.Nom&@enfant.Prenom&@enfant.DateNaissance'; this.form.action='/Enfant/FormModifier'; this.form.method='get'; submit();" type="button" value="Modifier">
+                        <input class="btn btn-warning p-1" onclick="if(confirm('Voulez vous confirmer?')){document.getElementById('infos').value = '@enfant.Nom&@enfant.Prenom&@enfant.DateNaissance'; this.form.action='/Enfant/SupprimerEnfant'; this.form.method='post'; submit();}" type="button" value="Supprimer"></td>
                     
                 </tr>}
         </table>
